@@ -1,0 +1,38 @@
+{
+  "name": "lmn-gulp-tasks",
+  "version": "1.0.0",
+  "description": "Generic Gulp tasks used in Lost My Name components and projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lostmyname/lmn-gulp-tasks"
+  },
+  "keywords": [
+    "gulp"
+  ],
+  "author": "Callum Macrae <callum@macr.ae>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lostmyname/lmn-gulp-tasks/issues"
+  },
+  "homepage": "https://github.com/Lostmyname/lmn-gulp-tasks",
+  "dependencies": {
+    "browserify": "^8.1.1",
+    "gulp": "^3.8.10",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-compass": "^2.0.3",
+    "gulp-jscs": "^1.4.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-minify-css": "^0.4.2",
+    "gulp-plumber": "^0.6.6",
+    "gulp-util": "^3.0.2",
+    "jshint": "^2.6.0",
+    "jshint-stylish": "^1.0.0",
+    "stylus": "^0.49.3",
+    "vinyl-source-stream": "^1.0.0"
+  }
+}
