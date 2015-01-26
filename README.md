@@ -71,7 +71,7 @@ will add an argument to the gulp call on every run that isn't the first one:
 useful if you only want BrowserSync to open a browser on the first run, for
 example.
 
-```
+```js
 gulp.task('auto-reload', getLmnTask('auto-reload', {
   addArgs: ['--no-open']
 }));
@@ -83,7 +83,7 @@ We use browserify on nearly all of our JavaScript at Lost My Name. This very
 simple task just runs browserify on your input file:
 
 
-```
+```js
 gulp.task('js', getLmnTask('browserify', {
   src: './src/js/monkey.js',
   dest: './demo/build/bundle.js'
@@ -95,7 +95,7 @@ gulp.task('js', getLmnTask('browserify', {
 This task runs JSCS and JSHint on your JavaScript, and optionally stops Gulp
 if an error is found.
 
-```
+```js
 gulp.task('js-quality', getLmnTask('js-quality', {
   src: './src/js/**/*.js',
   dieOnError: true
@@ -110,7 +110,7 @@ die.
 The scss tasks runs compass on one or more specified SCSS files, then runs
 autoprefixer on the resulting CSS, then optionally minifies it.
 
-```
+```js
 gulp.task('scss', getLmnTask('scss', {
   src: './src/scss/*.{sass,scss}',
   dest: './demo/build',
