@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/Lostmyname/lmn-gulp-tasks",
   "dependencies": {
+    "browser-sync": "^2.0.0-rc7",
     "browserify": "^8.1.1",
+    "delve": "^0.3.2",
     "findup-sync": "^0.2.1",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.1.0",
@@ -31,8 +33,10 @@
     "gulp-minify-css": "^0.4.2",
     "gulp-plumber": "^0.6.6",
     "gulp-util": "^3.0.2",
+    "js-yaml": "^3.2.5",
     "jshint": "^2.6.0",
     "jshint-stylish": "^1.0.0",
+    "rubbish-erb-parser": "^1.0.0",
     "stylus": "^0.49.3",
     "vinyl-source-stream": "^1.0.0"
   }

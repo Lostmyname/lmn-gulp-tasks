@@ -1,6 +1,8 @@
 'use strict';
 
+var browserSync = require('browser-sync');
 var findup = require('findup-sync');
+
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')({
   requireFn: function (name) {
@@ -9,10 +11,15 @@ var plugins = require('gulp-load-plugins')({
 });
 
 function errorHandler(err) {
+  browserSync.notify(err.message, 3000);
   plugins.util.log(err.toString());
 }
 
 module.exports = function getTask(name, options) {
+  if (typeof options !== 'object')  {
+    options = {};
+  }
+
   if (typeof options.onError !== 'function') {
     options.onError = errorHandler;
   }

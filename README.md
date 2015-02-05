@@ -90,6 +90,29 @@ gulp.task('js', getLmnTask('browserify', {
 }));
 ```
 
+### component-default
+
+A default task suitable for Lost My Name components generated using
+generator-lmn-component. Starts browser-sync, and watches some files.
+
+```js
+gulp.task('default', getLmnTask('component-default', {
+  reloadFiles: [], // Array of files to give to browsersync
+  watch: true // Run the watchers
+}));
+```
+
+I wouldn't recommend changing the options, or even specifying any at all.
+Usually this is fine:
+
+```js
+gulp.task('default', getLmnTask('component-default'));
+```
+
+### html
+
+Components only, probably. Takes faux-erb files and turns them into HTML.
+
 ### js-quality
 
 This task runs JSCS and JSHint on your JavaScript, and optionally stops Gulp
