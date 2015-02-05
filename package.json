@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Lostmyname/lmn-gulp-tasks",
   "dependencies": {
     "browserify": "^8.1.1",
+    "findup-sync": "^0.2.1",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.1.0",
     "gulp-compass": "^2.0.3",

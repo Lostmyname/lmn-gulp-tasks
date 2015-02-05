@@ -1,7 +1,12 @@
 'use strict';
 
+var findup = require('findup-sync');
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')();
+var plugins = require('gulp-load-plugins')({
+  requireFn: function (name) {
+    return require(__dirname + '/node_modules/' + name);
+  }
+});
 
 function errorHandler(err) {
   plugins.util.log(err.toString());
