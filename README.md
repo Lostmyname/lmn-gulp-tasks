@@ -111,7 +111,14 @@ gulp.task('default', getLmnTask('component-default'));
 
 ### html
 
-Components only, probably. Takes faux-erb files and turns them into HTML.
+Useful in LMN components only, probably. Takes faux-erb files and turns them
+into HTML.
+
+```js
+gulp.task('html', getLmnTask('html', {
+  langBase: 'component.monkey'
+}));
+```
 
 ### js-quality
 

@@ -6,7 +6,7 @@ var delve = require('delve');
 var erbParser = require('rubbish-erb-parser');
 var yaml = require('js-yaml');
 
-module.exports = function () {
+module.exports = function (gulp, plugins, options) {
   return function (done) {
     var base = fs.readFileSync('demo/base.erb.html', 'utf8');
     var partial = fs.readFileSync('src/partials/partial.erb.html', 'utf8');
@@ -16,7 +16,7 @@ module.exports = function () {
     var lang = yaml.safeLoad(fs.readFileSync('src/en.yml', 'utf8'));
 
     erbParser.addHelper('t', function (options, text) {
-      return delve(lang.en['component.monkey'], text);
+      return delve(lang.en[options.langBase], text);
     });
 
     erbParser.renderString(base, { imagePath: '../../src/imgs/' }, { name: 'monkey' })
