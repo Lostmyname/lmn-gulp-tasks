@@ -19,7 +19,9 @@ module.exports = function (gulp, plugins, options) {
       return delve(lang.en[options.langBase], text);
     });
 
-    erbParser.renderString(base, { imagePath: '../../src/imgs/' }, { name: 'monkey' })
+    var erbOptions = { imagePath: '../../src/imgs/' };
+
+    erbParser.renderString(base, erbOptions, options.context || {})
       .then(function (res) {
         fs.mkdir('demo/partials', function (err) {
           if (err && err.code !== 'EEXIST') {
