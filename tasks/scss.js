@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path');
+var rev = require('../lib/rev');
 
 module.exports = function (gulp, plugins, options) {
 	return function scssTask() {
@@ -18,6 +19,7 @@ module.exports = function (gulp, plugins, options) {
 			.pipe(plugins.plumber({ errorHandler: options.onError }))
 			.pipe(plugins.autoprefixer())
 			.pipe(options.minify ? plugins.minifyCss() : plugins.util.noop())
-			.pipe(gulp.dest(options.dest));
+			.pipe(gulp.dest(options.dest))
+      .pipe(rev(gulp, plugins, options));
 	};
 };

@@ -3,7 +3,7 @@
 var browserSync = require('browser-sync');
 
 module.exports = function (gulp, plugins, options) {
-  return function () {
+  return function componentDefaultTask() {
     var config = {
       server: {
         baseDir: '.'

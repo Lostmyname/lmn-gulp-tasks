@@ -60,6 +60,10 @@ gulp.task('js', getLmnTask('browserify', {
 }));
 ```
 
+## Revisioning assets
+
+A load of these tasks support revisioning of assets
+
 
 ## Tasks
 
@@ -87,6 +91,16 @@ simple task just runs browserify on your input file:
 gulp.task('js', getLmnTask('browserify', {
   src: './src/js/monkey.js',
   dest: './demo/build/bundle.js'
+}));
+```
+
+### clean
+
+This task deletes stuff. `src` can be either a string or an array.
+
+```js
+gulp.task('clean', getLmnTask('clean', {
+  src: 'deletethis.json'
 }));
 ```
 

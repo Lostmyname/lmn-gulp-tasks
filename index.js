@@ -1,8 +1,6 @@
 'use strict';
 
 var browserSync = require('browser-sync');
-var findup = require('findup-sync');
-
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')({
   requireFn: function (name) {
@@ -22,6 +20,10 @@ module.exports = function getTask(name, options) {
 
   if (typeof options.onError !== 'function') {
     options.onError = errorHandler;
+  }
+
+  if (typeof options.rev !== 'boolean') {
+    options.rev = (process.env.NODE_ENV === 'production');
   }
 
   // This means that you don't have to call this.emit('end') yourself
