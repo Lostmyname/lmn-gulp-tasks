@@ -33,7 +33,7 @@ module.exports = function getTask(name, options) {
     this.emit('end');
   };
 
-	return require('./tasks/' + name)(gulp, plugins, options);
+  return require('./tasks/' + name)(gulp, plugins, options);
 };
 
 module.exports.setErrorHandler = function (newHandler) {
