@@ -30,7 +30,7 @@ files instead of the one detailed in the Gulp recipes in my article [here]
 ## Handling errors
 
 Most of the tasks in this package have error handling built in so that Gulp
-doesn't explode if you miss a semi-colon from your JS. BY default, the errors
+doesn't explode if you miss a semi-colon from your JS. By default, the errors
 will be logged to the console and then ignored, but you can set your own
 handlers, either by changing the default handler, or by setting a handler per
 task.
@@ -62,7 +62,23 @@ gulp.task('js', getLmnTask('browserify', {
 
 ## Revisioning assets
 
-A load of these tasks support revisioning of assets
+A load of these tasks support revisioning of assets. There's an options called
+`rev` which should be boolean:
+
+```js
+gulp.task('js', getLmnTask('browserify', {
+  src: './src/js/monkey.js',
+  dest: './demo/build/bundle.js',
+  rev: true
+}));
+```
+
+That'll create a fingerprinted version of the file, and write the path to a
+manifest file in the root directory.
+
+`rev` defaults to `process.env.NODE_ENV === 'production'`.
+
+**Tasks that support revisioning are marked with asterisks.**
 
 
 ## Tasks
@@ -70,8 +86,8 @@ A load of these tasks support revisioning of assets
 ### auto-reload
 
 When you run this task, it will watch the gulpfile for changes and restart
-gulp when a change is made. In addition, there is an `addArgs` option which
-will add an argument to the gulp call on every run that isn't the first one:
+Gulp when a change is made. In addition, there is an `addArgs` option which
+will add an argument to the Gulp call on every run that isn't the first one:
 useful if you only want BrowserSync to open a browser on the first run, for
 example.
 
@@ -81,7 +97,7 @@ gulp.task('auto-reload', getLmnTask('auto-reload', {
 }));
 ```
 
-### browserify
+### browserify*
 
 We use browserify on nearly all of our JavaScript at Lost My Name. This very
 simple task just runs browserify on your input file:
@@ -123,7 +139,7 @@ Usually this is fine:
 gulp.task('default', getLmnTask('component-default'));
 ```
 
-### extract
+### extract*
 
 This task is used to extract assets (or anything else, for that matter) from
 modules stored in a node_modules directory somewhere.
@@ -168,7 +184,7 @@ gulp.task('js-quality', getLmnTask('js-quality', {
 `dieOnError` defaults to false, so if you miss that option out, Gulp will not
 die.
 
-### optimise-svgs
+### optimise-svgs*
 
 This task gets svgs, optionally flattens the directory structure, optimises
 the svgs and makes optimised png fallbacks for browsers that don't support svg.
@@ -181,7 +197,7 @@ gulp.task('optimise-svgs', loadLmnTask('optimise-svgs', {
 }));
 ```
 
-### responsive-images
+### responsive-images*
 
 The responsive-images task is pretty big. It handles turning images like
 some-image-500x50@2x.png into some-image-xlarge.png, some-image-large.png,
@@ -209,7 +225,7 @@ file size, and it's not noticeable unless you look hard. You can see in the
 example code above that we compress everything but the header images using a
 lossy compression.
 
-### scss
+### scss*
 
 The scss tasks runs compass on one or more specified SCSS files, then runs
 autoprefixer on the resulting CSS, then optionally minifies it.
