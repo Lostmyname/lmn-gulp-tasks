@@ -163,6 +163,7 @@ into HTML.
 ```js
 gulp.task('html', getLmnTask('html', {
   langBase: 'component.monkey',
+  imagePath: '../imgs',
   context: {
     foo: 'bar' // Will be accessible in the template files
   }

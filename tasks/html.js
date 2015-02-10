@@ -19,7 +19,7 @@ module.exports = function (gulp, plugins, options) {
       return delve(lang.en[options.langBase], text);
     });
 
-    var erbOptions = { imagePath: '../../src/imgs/' };
+    var erbOptions = { imagePath: options.imagePath || '../../src/imgs/' };
 
     erbParser.renderString(base, erbOptions, options.context || {})
       .then(function (res) {
