@@ -123,6 +123,22 @@ Usually this is fine:
 gulp.task('default', getLmnTask('component-default'));
 ```
 
+### extract
+
+This task is used to extract assets (or anything else, for that matter) from
+modules stored in a node_modules directory somewhere.
+
+```js
+gulp.task('getMarkdown', loadLmnTask('extract', {
+  module: 'my-module',
+  src: '/src/markdown/**/*.md',
+  dest: 'markdown'
+}));
+```
+
+That will extract everything matching that path inside the first module
+matching `my-module`.
+
 ### html
 
 Useful in LMN components only, probably. Takes faux-erb files and turns them
@@ -151,6 +167,47 @@ gulp.task('js-quality', getLmnTask('js-quality', {
 
 `dieOnError` defaults to false, so if you miss that option out, Gulp will not
 die.
+
+### optimise-svgs
+
+This task gets svgs, optionally flattens the directory structure, optimises
+the svgs and makes optimised png fallbacks for browsers that don't support svg.
+
+```js
+gulp.task('optimise-svgs', loadLmnTask('optimise-svgs', {
+  src: './src/images/**/*.svg',
+  dest: buildPath + 'images',
+  flatten: true // Defaults to false
+}));
+```
+
+### responsive-images
+
+The responsive-images task is pretty big. It handles turning images like
+some-image-500x50@2x.png into some-image-xlarge.png, some-image-large.png,
+etc.
+
+```js
+gulp.task('responsive-images', loadLmnTask('responsive-images', {
+  src: './src/images/**/*.{png,jpg,gif}',
+  dest: buildPath + 'images',
+  lossless: function (file) {
+    return _.contains(file.path, 'hero');
+  }
+}));
+```
+
+This is an option called `retinaSrc`, but you might not need to specify it:
+the task will attempt to calculate it by replacing `*.{` with `*@2x*.{`: for
+example, if your `src` is `./img/**/*.{png,jpg}`, your generated retinaSrc will
+be `./img/**/*@2x*.{png,jpg}`.
+
+The `lossless` option should be either a function or a boolean value, and is
+used to tell whether to compress the image losslessly or not. It defaults to
+false, and imagemin will use `jpegoptim({ max: 80 })`. It's a big reduction in
+file size, and it's not noticeable unless you look hard. You can see in the
+example code above that we compress everything but the header images using a
+lossy compression.
 
 ### scss
 
