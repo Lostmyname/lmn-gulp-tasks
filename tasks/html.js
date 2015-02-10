@@ -21,7 +21,7 @@ module.exports = function (gulp, plugins, options) {
       return delve(lang.en[options.langBase], text);
     });
 
-    var erbOptions = { imagePath: options.imagePath || path.join(cwd, 'build/images/') };
+    var erbOptions = { imagePath: options.imagePath || '../../build/images/' };
 
     erbParser.renderString(base, erbOptions, options.context || {})
       .then(function (res) {
