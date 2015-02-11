@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Lostmyname/lmn-gulp-tasks",
   "dependencies": {
-    "browser-sync": "^2.0.0-rc7",
+    "browser-sync": "^2.0.1",
     "browserify": "^8.1.1",
     "del": "^1.1.1",
     "delve": "^0.3.2",
