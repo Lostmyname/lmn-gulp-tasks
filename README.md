@@ -139,6 +139,19 @@ Usually this is fine:
 gulp.task('default', getLmnTask('component-default'));
 ```
 
+### copy*
+
+Literally just copies stuff from one place to another, and can fingerprint it
+if necessary.
+
+```
+gulp.task('move-favicon', loadLmnTask('copy', {
+  src: './assets/favicon.ico',
+  dest: './demo/build',
+  rev: false
+}));
+```
+
 ### extract*
 
 This task is used to extract assets (or anything else, for that matter) from
@@ -241,6 +254,18 @@ gulp.task('scss', getLmnTask('scss', {
 
 `minify` defaults to true: omitting the option will result in the resulting CSS
 being minified.
+
+### test-locales
+
+This searches for localised files and ensures that if a file is localised, it
+is localised in every language:
+
+```js
+gulp.task('test-locales', getLmnTask('test-locales', {
+  src: './src/images/**/*.{png,jpg,gif}',
+  locales: ['en-US', 'de', 'en-GB']
+}));
+```
 
 
 ## License
