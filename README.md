@@ -223,7 +223,8 @@ gulp.task('responsive-images', loadLmnTask('responsive-images', {
   dest: buildPath + 'images',
   lossless: function (file) {
     return _.contains(file.path, 'hero');
-  }
+  },
+  flatten: true // defaults to false
 }));
 ```
 

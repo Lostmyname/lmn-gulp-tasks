@@ -58,7 +58,9 @@ module.exports = function (gulp, plugins, options) {
       }
 
       path.basename = matches[1] + suffix + (matches[2] || '');
-      path.dirname = '';
+      if (options.flatten) {
+        path.dirname = '';
+      }
     });
   }
 
