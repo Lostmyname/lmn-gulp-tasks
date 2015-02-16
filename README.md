@@ -260,7 +260,7 @@ being minified.
 
 There should never be any need to write "../node_modules", as the import paths
 are set for you. Therefore, it should be considered an antipattern, and this
-task will throw an error if you write "../node_modules".
+task will throw an error if you write "../node_modules" anywhere in your Sass.
 
 If you really want to use this anti-pattern, you can set the
 `ignoreSuckyAntipattern` option to true and the task won't check your code.
