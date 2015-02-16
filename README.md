@@ -256,6 +256,15 @@ gulp.task('scss', getLmnTask('scss', {
 `minify` defaults to true: omitting the option will result in the resulting CSS
 being minified.
 
+#### Checking for ../node_modules
+
+There should never be any need to write "../node_modules", as the import paths
+are set for you. Therefore, it should be considered an antipattern, and this
+task will throw an error if you write "../node_modules".
+
+If you really want to use this anti-pattern, you can set the
+`ignoreSuckyAntipattern` option to true and the task won't check your code.
+
 ### test-locales
 
 This searches for localised files and ensures that if a file is localised, it

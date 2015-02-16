@@ -89,5 +89,28 @@ describe('scss', function () {
     })();
   });
 
-  it('should check for "../node_modules"');
+  it('should check for "../node_modules"', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'bad-import.scss'),
+      minify: false,
+      dest: function (files) {
+        files.length.should.equal(0);
+      },
+      onError: function () {
+        done();
+      }
+    })();
+  });
+
+  it('…unless you skip it', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'bad-import.scss'),
+      minify: false,
+      ignoreSuckyAntipattern: true,
+      dest: function (files) {
+        files.length.should.equal(1);
+        done();
+      }
+    })();
+  });
 });
