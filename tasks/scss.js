@@ -13,7 +13,7 @@ module.exports = function (gulp, plugins, options) {
     return gulp.src(options.src)
       .pipe(plugins.sass({
         imagePath: options.imagePath,
-        includePaths: findNodeModules()
+        includePaths: findNodeModules({ relative: false })
       }))
       .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
       .pipe(plugins.plumber({ errorHandler: options.onError }))
