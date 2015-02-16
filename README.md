@@ -1,4 +1,4 @@
-# Gulp Tasks
+# Gulp Tasks [![Build Status](https://travis-ci.org/Lostmyname/lmn-gulp-tasks.svg)](https://travis-ci.org/Lostmyname/lmn-gulp-tasks)
 
 A collection of generic configurable Gulp tasks used in various projects,
 themes and components at Lost My Name. They'll work in your projects, too!

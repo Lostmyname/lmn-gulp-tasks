@@ -4,7 +4,7 @@
   "description": "Generic Gulp tasks used in Lost My Name components and projects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -58,5 +58,11 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-paths": "^1.0.0",
     "vinyl-source-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "lmn.jester.theme.default": "^0.13.1",
+    "mocha": "^2.1.0",
+    "should": "^5.0.0",
+    "vinyl-fs-fake": "^1.0.0"
   }
 }
