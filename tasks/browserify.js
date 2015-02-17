@@ -7,10 +7,11 @@ var source = require('vinyl-source-stream');
 var rev = require('../lib/rev');
 
 module.exports = function (gulp, plugins, options) {
+  var basename = path.basename(options.dest);
+  options.dest = path.dirname(options.dest);
+
   return function browserifyTask() {
     var bundler = browserify(options.src);
-    var basename = path.basename(options.dest);
-    options.dest = path.dirname(options.dest);
 
     return bundler.bundle()
       .on('error', options.onError)
