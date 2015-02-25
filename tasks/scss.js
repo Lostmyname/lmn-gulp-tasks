@@ -18,7 +18,7 @@ module.exports = function (gulp, plugins, options) {
       .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
       .pipe(plugins.sass({
         imagePath: options.imagePath,
-        includePaths: findNodeModules({ relative: false })
+        includePaths: options.includePaths || findNodeModules({ relative: false })
       }))
       .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
       .pipe(plugins.autoprefixer())
