@@ -80,7 +80,7 @@ describe('scss', function () {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'import2.scss'),
       minify: false,
-      includePaths: ['test/fixtures/sass/test'],
+      includePaths: ['test/fixtures'],
       dest: function (files) {
         files.length.should.equal(1);
 
