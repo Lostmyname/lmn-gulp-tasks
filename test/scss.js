@@ -1,23 +1,14 @@
+/* global getFile */
+
 'use strict';
 
 var loadLmnTask = require('../');
 
-var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
 
 var fixtures = path.join(__dirname, 'fixtures/sass');
-
-function getFile(name, slice) {
-  var buffer = fs.readFileSync(path.join(fixtures, name));
-
-  if (slice !== false) {
-    buffer = buffer.slice(0, -1);
-  }
-
-  return buffer;
-}
-
+var p = _.partial(path.join, fixtures);
 
 describe('scss', function () {
   it('should parse simple scss', function (done) {
@@ -26,7 +17,7 @@ describe('scss', function () {
       dest: function (files) {
         files.length.should.equal(1);
 
-        files[0].contents.should.eql(getFile('test-out.min.css'));
+        files[0].contents.should.eql(getFile(p('test-out.min.css')));
 
         done();
       }
@@ -41,7 +32,7 @@ describe('scss', function () {
   //    dest: function (files) {
   //      files.length.should.equal(1);
   //
-  //      files[0].contents.should.eql(getFile('test-out.min.css'));
+  //      files[0].contents.should.eql(getFile(p('test-out.min.css')));
   //
   //      done();
   //    }
@@ -55,7 +46,7 @@ describe('scss', function () {
       dest: function (files) {
         files.length.should.equal(1);
 
-        files[0].contents.should.eql(getFile('test-out.css', false));
+        files[0].contents.should.eql(getFile(p('test-out.css'), false));
 
         done();
       }

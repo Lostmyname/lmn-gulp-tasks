@@ -1,23 +1,13 @@
+/* global getFile */
+
 'use strict';
 
 var loadLmnTask = require('../');
 
-var fs = require('fs');
 var path = require('path');
 
 var fixtures = path.join(__dirname, 'fixtures/js');
 var fixturesOut = path.join(__dirname, 'fixtures/out');
-
-function getFile(name, slice) {
-  var buffer = fs.readFileSync(name);
-
-  if (slice !== false) {
-    buffer = buffer.slice(0, -1);
-  }
-
-  return buffer;
-}
-
 
 describe('browserify', function () {
   it('should parse simple js', function (done) {
