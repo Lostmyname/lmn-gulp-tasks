@@ -4,6 +4,7 @@ var loadLmnTask = require('../');
 
 var fs = require('fs');
 var path = require('path');
+var _ = require('lodash');
 
 var fixtures = path.join(__dirname, 'fixtures/sass');
 
@@ -71,6 +72,50 @@ describe('scss', function () {
         files[0].contents.length.should.be.above(1000);
 
         done();
+      }
+    })();
+  });
+
+  it('should handle other import paths', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'import2.scss'),
+      minify: false,
+      includePaths: ['test/fixtures/sass/test'],
+      dest: function (files) {
+        files.length.should.equal(1);
+
+        done();
+      }
+    })();
+  });
+
+  it('should handle node_modules imports even when other import paths', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'import.scss'),
+      minify: false,
+      includePaths: ['something'],
+      dest: function (files) {
+        files.length.should.equal(1);
+
+        files[0].contents.length.should.be.above(1000);
+
+        done();
+      }
+    })();
+  });
+
+  it('should not handle node_modules imports when told not to', function (done) {
+    var doneOnce = _.once(done);
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'import.scss'),
+      minify: false,
+      includePaths: false,
+      dest: function (files) {
+        files.length.should.equal(0);
+      },
+      onError: function (err) {
+        err.message.should.containEql('file to import not found or unreadable');
+        doneOnce();
       }
     })();
   });

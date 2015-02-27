@@ -249,6 +249,7 @@ autoprefixer on the resulting CSS, then optionally minifies it.
 gulp.task('scss', getLmnTask('scss', {
   src: './src/scss/*.{sass,scss}',
   dest: './demo/build',
+  includePaths: [],
   minify: false
 }));
 ```
@@ -256,7 +257,16 @@ gulp.task('scss', getLmnTask('scss', {
 `minify` defaults to true: omitting the option will result in the resulting CSS
 being minified.
 
+The task, in addition to passing through any include paths you give it, will
+pass in the output of [find-node-modules], making it easier to include SCSS
+from modules from npm. Using ../node_modules is an anti-pattern, as explained
+below! To disable this behaviour, set `includePaths` to `false`.
+
 #### Checking for ../node_modules
+
+The problem with writing "../node_modules" is that there is no guarantee that
+the module will actually be installed there. It could have been installed a
+directory up, in which case it won't be installed again below.
 
 There should never be any need to write "../node_modules", as the import paths
 are set for you. Therefore, it should be considered an antipattern, and this
@@ -281,3 +291,5 @@ gulp.task('test-locales', getLmnTask('test-locales', {
 ## License
 
 This project is released under the MIT license.
+
+[find-node-modules]: https://github.com/callumacrae/find-node-modules
