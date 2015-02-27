@@ -1,4 +1,4 @@
-/* global getFile */
+/* global clean, getFile */
 
 'use strict';
 
@@ -10,6 +10,9 @@ var fixtures = path.join(__dirname, 'fixtures/js');
 var fixturesOut = path.join(__dirname, 'fixtures/out');
 
 describe('browserify', function () {
+  beforeEach(clean);
+  afterEach(clean);
+
   it('should parse simple js', function (done) {
     var out = path.join(fixturesOut, 'simple.js');
     var stream = loadLmnTask('browserify', {
