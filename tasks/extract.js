@@ -1,11 +1,12 @@
 'use strict';
 
+var path = require('path');
 var findup = require('findup-sync');
 var rev = require('../lib/rev');
 
 module.exports = function (gulp, plugins, options) {
   return function () {
-    var src = findup('node_modules/' + options.module) + options.src;
+    var src = path.join(findup('node_modules/' + options.module), options.src);
 
     return gulp.src(src)
       .pipe(plugins.rename({ dirname: '' }))
