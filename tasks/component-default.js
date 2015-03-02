@@ -28,7 +28,7 @@ module.exports = function (gulp, plugins, options) {
       'test/**/*.js'
     ], config);
 
-    if (typeof options.watch === 'boolean' && !option.watch) {
+    if (typeof options.watch !== 'boolean' || options.watch) {
       gulp.watch('./src/scss/**/*.{sass,scss}', ['scss']);
       gulp.watch('./src/js/**/*.js', ['browserify']);
       gulp.watch('./src/partials/partial.erb.html', ['html']);
