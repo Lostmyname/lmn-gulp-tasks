@@ -1,4 +1,4 @@
-/* global clean, getFile */
+/* global clean, getFile, hookStdout */
 
 'use strict';
 
@@ -14,6 +14,8 @@ describe('optimise-svgs', function () {
   after(clean);
 
   it('shouldnt optimise unchanged svgs', function (done) {
+    var unhook = hookStdout();
+
     var stream = loadLmnTask('optimise-svgs', {
       src: p('svg/logo-148x35.svg'),
       dest: p('svg')
@@ -24,11 +26,14 @@ describe('optimise-svgs', function () {
         getFile(p('svg/logo-148x35.png'));
       }, /ENOENT/);
 
+      unhook();
       done();
     });
   });
 
   it('should optimise changed svgs', function (done) {
+    var unhook = hookStdout();
+
     var stream = loadLmnTask('optimise-svgs', {
       src: p('svg/logo-148x35.svg'),
       dest: p('out')
@@ -40,6 +45,7 @@ describe('optimise-svgs', function () {
 
       svgOut.should.eql(expectedSvg);
 
+      unhook();
       done();
     });
   });
