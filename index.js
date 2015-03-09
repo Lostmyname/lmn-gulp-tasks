@@ -13,6 +13,10 @@ var plugins = require('gulp-load-plugins')({
 function errorHandler(err) {
   browserSync.notify(err.message, 3000);
   plugins.util.log(err.toString());
+
+  if (process.argv.indexOf('--fail') !== -1) {
+    process.exit(1);
+  }
 }
 
 /**
