@@ -8,7 +8,7 @@ module.exports = function (gulp, plugins, options) {
 
     // Default to false
     if (options.dieOnError !== true) {
-      options.dieOnError = false;
+      options.dieOnError = process.argv.indexOf('--fail') !== -1;
     }
 
     if (!options.dieOnError) {
