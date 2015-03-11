@@ -17,7 +17,8 @@ describe('browserify', function () {
     var out = path.join(fixturesOut, 'simple.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'simple.js'),
-      dest: out
+      dest: out,
+      minify: false
     })();
 
     stream.on('finish', function () {
@@ -34,7 +35,8 @@ describe('browserify', function () {
     var out = path.join(fixturesOut, 'require.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'require.js'),
-      dest: out
+      dest: out,
+      minify: false
     })();
 
     stream.on('finish', function () {
@@ -42,6 +44,54 @@ describe('browserify', function () {
 
       file.length.should.be.within(580, 680);
       file.toString().should.containEql('test');
+
+      done();
+    });
+  });
+
+  it('should object to ../node_modules', function (done) {
+    loadLmnTask('browserify', {
+      src: path.join(fixtures, 'bad-import.js'),
+      minify: false,
+      onError: function (err) {
+        err.toString().should.containEql('contains "../node_modules"');
+        done();
+      }
+    })();
+  });
+
+  it('should minify and strip console.log', function (done) {
+    var out = path.join(fixturesOut, 'require.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'require.js'),
+      dest: out
+    })();
+
+    stream.on('finish', function () {
+      var file = getFile(out);
+
+      file.length.should.be.within(530, 600);
+      file.toString().should.not.containEql('\n');
+      file.toString().should.not.containEql('console.log');
+
+      done();
+    });
+  });
+
+  it('should not minify when false', function (done) {
+    var out = path.join(fixturesOut, 'require.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'require.js'),
+      dest: out,
+      minify: false
+    })();
+
+    stream.on('finish', function () {
+      var file = getFile(out);
+
+      file.length.should.be.within(580, 680);
+      file.toString().should.containEql('\n');
+      file.toString().should.containEql('console.log');
 
       done();
     });

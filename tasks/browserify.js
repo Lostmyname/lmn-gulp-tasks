@@ -12,6 +12,11 @@ module.exports = function (gulp, plugins, options) {
   options.dest = path.dirname(options.dest);
 
   return function browserifyTask() {
+    // Default to true
+    if (options.minify !== false) {
+      options.minify = true;
+    }
+
     var bundler = browserify(options.src);
 
     var ignore = options.ignoreSuckyAntipattern;
@@ -20,7 +25,10 @@ module.exports = function (gulp, plugins, options) {
       .on('error', options.onError)
       .pipe(source(basename))
       .pipe(buffer())
+      .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
+      .pipe(options.minify ? plugins.uglify() : through.obj())
+      .pipe(options.minify ? plugins.stripDebug() : through.obj())
       .pipe(gulp.dest(options.dest))
       .pipe(rev(gulp, plugins, options));
   };

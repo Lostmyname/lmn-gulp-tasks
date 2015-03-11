@@ -106,9 +106,14 @@ simple task just runs browserify on your input file:
 ```js
 gulp.task('js', getLmnTask('browserify', {
   src: './src/js/monkey.js',
-  dest: './demo/build/bundle.js'
+  dest: './demo/build/bundle.js',
+  minify: false
 }));
 ```
+
+`minify` defaults to true: omitting the option will result in the resulting JS
+being minified. In addition to minifying, the `minify` option will call
+strip-debug, which strips `console`, `alert` and `debugger` statements.
 
 ### clean
 
