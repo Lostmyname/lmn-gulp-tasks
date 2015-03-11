@@ -7,8 +7,8 @@ var through = require('through2');
 module.exports = function (gulp, plugins, options) {
   return function scssTask() {
     // Default to true
-    if (options.minify !== false) {
-      options.minify = true;
+    if (typeof options.minify !== 'boolean') {
+      options.minify = process.env.MINIFY_JS || false;
     }
 
     var includePaths;

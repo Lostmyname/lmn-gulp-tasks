@@ -17,8 +17,7 @@ describe('browserify', function () {
     var out = path.join(fixturesOut, 'simple.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'simple.js'),
-      dest: out,
-      minify: false
+      dest: out
     })();
 
     stream.on('finish', function () {
@@ -35,8 +34,7 @@ describe('browserify', function () {
     var out = path.join(fixturesOut, 'require.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'require.js'),
-      dest: out,
-      minify: false
+      dest: out
     })();
 
     stream.on('finish', function () {
@@ -64,7 +62,8 @@ describe('browserify', function () {
     var out = path.join(fixturesOut, 'require.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'require.js'),
-      dest: out
+      dest: out,
+      minify: true
     })();
 
     stream.on('finish', function () {
@@ -82,8 +81,7 @@ describe('browserify', function () {
     var out = path.join(fixturesOut, 'require.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'require.js'),
-      dest: out,
-      minify: false
+      dest: out
     })();
 
     stream.on('finish', function () {

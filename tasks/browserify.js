@@ -13,8 +13,8 @@ module.exports = function (gulp, plugins, options) {
 
   return function browserifyTask() {
     // Default to true
-    if (options.minify !== false) {
-      options.minify = true;
+    if (typeof options.minify !== 'boolean') {
+      options.minify = process.env.MINIFY_JS || false;
     }
 
     var bundler = browserify(options.src);

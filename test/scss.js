@@ -14,6 +14,7 @@ describe('scss', function () {
   it('should parse simple scss', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'test.scss'),
+      minify: true,
       dest: function (files) {
         files.length.should.equal(1);
 
@@ -56,7 +57,6 @@ describe('scss', function () {
   it('should handle node_modules imports', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'import.scss'),
-      minify: false,
       dest: function (files) {
         files.length.should.equal(1);
 
@@ -70,7 +70,6 @@ describe('scss', function () {
   it('should handle other import paths', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'import2.scss'),
-      minify: false,
       includePaths: ['test/fixtures'],
       dest: function (files) {
         files.length.should.equal(1);
@@ -83,7 +82,6 @@ describe('scss', function () {
   it('should handle node_modules imports even when other import paths', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'import.scss'),
-      minify: false,
       includePaths: ['something'],
       dest: function (files) {
         files.length.should.equal(1);
@@ -99,7 +97,6 @@ describe('scss', function () {
     var doneOnce = _.once(done);
     loadLmnTask('scss', {
       src: path.join(fixtures, 'import.scss'),
-      minify: false,
       includePaths: false,
       dest: function (files) {
         files.length.should.equal(0);
@@ -114,7 +111,6 @@ describe('scss', function () {
   it('should be autoprefixed', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'prefix.scss'),
-      minify: false,
       dest: function (files) {
         files.length.should.equal(1);
 
@@ -128,7 +124,6 @@ describe('scss', function () {
   it('should check for "../node_modules"', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'bad-import.scss'),
-      minify: false,
       dest: function (files) {
         files.length.should.equal(0);
       },
@@ -141,7 +136,6 @@ describe('scss', function () {
   it('…unless you skip it', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'bad-import.scss'),
-      minify: false,
       ignoreSuckyAntipattern: true,
       dest: function (files) {
         files.length.should.equal(1);
