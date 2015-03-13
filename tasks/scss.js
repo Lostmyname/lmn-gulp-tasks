@@ -7,7 +7,11 @@ var through = require('through2');
 module.exports = function (gulp, plugins, options) {
   return function scssTask() {
     if (typeof options.minify !== 'boolean') {
-      options.minify = process.env.MINIFY_JS || false;
+      options.minify = process.env.MINIFY_ASSETS || false;
+    }
+
+    if (typeof options.sourcemaps !== 'boolean') {
+      options.sourcemaps = process.env.SOURCEMAPS || true;
     }
 
     var includePaths;
@@ -26,7 +30,7 @@ module.exports = function (gulp, plugins, options) {
     return gulp.src(options.src)
       .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
-      .pipe(plugins.sourcemaps.init())
+      .pipe(options.sourcemaps ? plugins.sourcemaps.init() : through.obj())
 
       // Sourcemap start
       .pipe(plugins.sass({
@@ -42,7 +46,7 @@ module.exports = function (gulp, plugins, options) {
       }) : through.obj())
       // Sourcemap end
 
-      .pipe(plugins.sourcemaps.write('./'))
+      .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
       .pipe(gulp.dest(options.dest))
       .pipe(rev(gulp, plugins, options));
   };

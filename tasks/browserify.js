@@ -12,13 +12,17 @@ module.exports = function (gulp, plugins, options) {
 
   return function browserifyTask() {
     if (typeof options.minify !== 'boolean') {
-      options.minify = process.env.MINIFY_JS || false;
+      options.minify = process.env.MINIFY_ASSETS || false;
+    }
+
+    if (typeof options.sourcemaps !== 'boolean') {
+      options.sourcemaps = process.env.SOURCEMAPS || true;
     }
 
     var ignore = options.ignoreSuckyAntipattern;
 
     var browserified = transform(function (filename) {
-      var b = browserify({ entries: filename, debug: true });
+      var b = browserify({ entries: filename, debug: options.sourcemaps });
       return b.bundle();
     });
 
@@ -27,14 +31,14 @@ module.exports = function (gulp, plugins, options) {
       .pipe(browserified)
       .pipe(plugins.rename(basename))
       .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
-      .pipe(plugins.sourcemaps.init({ loadMaps: true }))
+      .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
 
       // Sourcemaps start
       .pipe(options.minify ? plugins.uglify() : through.obj())
       .pipe(options.minify ? plugins.stripDebug() : through.obj())
       // Sourcemaps end
 
-      .pipe(plugins.sourcemaps.write('./'))
+      .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
       .pipe(gulp.dest(options.dest))
       .pipe(rev(gulp, plugins, options));
   };
