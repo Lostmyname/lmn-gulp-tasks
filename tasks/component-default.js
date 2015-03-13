@@ -30,7 +30,7 @@ module.exports = function (gulp, plugins, options) {
 
     if (typeof options.watch !== 'boolean' || options.watch) {
       gulp.watch('./src/scss/**/*.{sass,scss}', ['scss']);
-      gulp.watch('./src/js/**/*.js', ['browserify']);
+      gulp.watch('./src/js/**/*.js', ['js']);
       gulp.watch('./src/partials/partial.erb.html', ['html']);
       gulp.watch('./demo/base.erb.html', ['html']);
     }
