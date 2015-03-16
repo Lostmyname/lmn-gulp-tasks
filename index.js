@@ -2,7 +2,11 @@
 
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')();
+var plugins = require('gulp-load-plugins')({
+  rename: {
+    'gulp-buddy.js': 'buddy'
+  }
+});
 
 // Default error handler. Sends to browser-sync, and logs to console.
 function errorHandler(err) {

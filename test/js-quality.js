@@ -1,4 +1,4 @@
-/* global hookOnce */
+/* global hookOnce, hookStdout */
 
 'use strict';
 
@@ -49,6 +49,26 @@ describe('js-quality', function () {
 
     loadLmnTask('js-quality', {
       src: path.join(fixtures, 'bad-jshint.js')
+    })();
+  });
+
+  it('should test for magic numbers', function (done) {
+    // gulp-buddy.js outputs to the console
+    var output = '';
+    var unhook = hookStdout(function (string) {
+      output += string;
+    });
+
+    loadLmnTask('js-quality', {
+      src: path.join(fixtures, 'bad-magic.js'),
+      onError: function (err) {
+        unhook();
+
+        output.should.containEql('876345');
+        err.toString().should.containEql('buddy.js failed');
+
+        done();
+      }
     })();
   });
 });

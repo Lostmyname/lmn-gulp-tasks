@@ -16,6 +16,7 @@ module.exports = function (gulp, plugins, options) {
     }
 
     stream = stream.pipe(plugins.jscs())
+      .pipe(plugins.buddy({ ignore: [0, 0.5, 1, 2] }))
       .pipe(plugins.jshint())
       .pipe(plugins.jshint.reporter(stylish));
 
