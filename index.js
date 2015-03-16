@@ -2,12 +2,7 @@
 
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')({
-  requireFn: function (name) {
-    // Temporary workaround for jackfranklin/gulp-load-plugins#56
-    return require(__dirname + '/node_modules/' + name);
-  }
-});
+var plugins = require('gulp-load-plugins')();
 
 // Default error handler. Sends to browser-sync, and logs to console.
 function errorHandler(err) {
