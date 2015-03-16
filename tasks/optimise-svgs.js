@@ -9,6 +9,7 @@ module.exports = function (gulp, plugins, options) {
 
     // Optimise SVGs
     var svgStream = gulp.src(options.src)
+      .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(options.flatten ? plugins.rename({ dirname: '' }) : through.obj())
       .pipe(plugins.changed(options.dest))
       .pipe(plugins.imagemin({ svgoPlugins: [{ removeViewBox: false }] }))

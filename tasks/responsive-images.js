@@ -7,11 +7,13 @@ var rev = require('../lib/rev');
 
 module.exports = function (gulp, plugins, options) {
   return function () {
-    var images = gulp.src(options.src);
+    var images = gulp.src(options.src)
+      .pipe(plugins.plumber({ errorHandler: options.onError }));
     var imageTasks = [];
 
     // Special case for retina images
     var stream = gulp.src(options.retinaSrc || getRetinaSrc(options.src))
+      .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(handleRename('-xlarge'))
       .pipe(handleChanged())
       .pipe(handleOptimize())
