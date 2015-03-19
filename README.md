@@ -149,11 +149,14 @@ gulp.task('default', getLmnTask('component-default'));
 Literally just copies stuff from one place to another, and can fingerprint it
 if necessary.
 
+Have the option to flatten the directory structure if needed.
+
 ```
 gulp.task('move-favicon', loadLmnTask('copy', {
   src: './assets/favicon.ico',
   dest: './demo/build',
-  rev: false
+  rev: false,
+  flatten: false
 }));
 ```
 
