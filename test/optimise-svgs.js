@@ -41,7 +41,7 @@ describe('optimise-svgs', function () {
 
     stream.on('finish', function () {
       var expectedSvg = getFile(p('svg/logo-148x35-out.svg'));
-      var svgOut = getFile(p('out/logo-148x35.svg'));
+      var svgOut = getFile(p('out/logo-148x35.svg'), false);
 
       svgOut.should.eql(expectedSvg);
 
