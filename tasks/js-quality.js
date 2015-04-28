@@ -1,6 +1,7 @@
 'use strict';
 
 var stylish = require('jshint-stylish');
+var through = require('through2');
 
 module.exports = function (gulp, plugins, options) {
   return function jsQualityTask() {
@@ -15,8 +16,11 @@ module.exports = function (gulp, plugins, options) {
       stream = stream.pipe(plugins.plumber({ errorHandler: options.onError }));
     }
 
+    var magicAllowed = options.magicAllowed || [0, 0.5, 1, 2];
+    var runBuddy = (magicAllowed !== true);
+
     stream = stream.pipe(plugins.jscs())
-      .pipe(plugins.buddy({ ignore: [0, 0.5, 1, 2] }))
+      .pipe(runBuddy ? plugins.buddy({ ignore:  magicAllowed }) : through.obj())
       .pipe(plugins.jshint())
       .pipe(plugins.jshint.reporter(stylish));
 

@@ -193,8 +193,8 @@ gulp.task('html', getLmnTask('html', {
 
 ### js-quality
 
-This task runs JSCS and JSHint on your JavaScript, and optionally stops Gulp
-if an error is found.
+This task runs JSCS, JSHint and [buddy.js] on your JavaScript, and optionally
+stops Gulp if an error is found.
 
 ```js
 gulp.task('js-quality', getLmnTask('js-quality', {
@@ -205,6 +205,13 @@ gulp.task('js-quality', getLmnTask('js-quality', {
 
 `dieOnError` defaults to false, so if you miss that option out, Gulp will not
 die.
+
+buddy.js is a magic number detection script. If you pass 17 to a function, it
+will error! Don't pass 17 to functions, pass `GUTTER_WIDTH` instead, because
+then nobody needs to read the docs to know waht you're doing.
+
+If you want to disable this behaviour, you can pass in `magicAllowed: true`.
+If you want to allow other numbers, try `magicAllowed: [0, 0.5, 1, 2, 17]`.
 
 ### optimise-svgs*
 
@@ -301,3 +308,4 @@ gulp.task('test-locales', getLmnTask('test-locales', {
 This project is released under the MIT license.
 
 [find-node-modules]: https://github.com/callumacrae/find-node-modules
+[buddy.js]: https://github.com/danielstjules/buddy.js

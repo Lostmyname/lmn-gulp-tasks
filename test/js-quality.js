@@ -13,7 +13,7 @@ describe('js-quality', function () {
     var stream = loadLmnTask('js-quality', {
       src: path.join(fixtures, 'simple.js'),
       onError: function () {
-        should.fail();
+        throw new Error('This should not have errored!');
       }
     })();
 
@@ -81,5 +81,35 @@ describe('js-quality', function () {
         done();
       }
     })();
+  });
+
+  it('should not test for magic numbers when told not to', function (done) {
+    var stream = loadLmnTask('js-quality', {
+      src: path.join(fixtures, 'bad-magic.js'),
+      magicAllowed: true,
+      onError: function () {
+        throw new Error('This should not have errored!');
+      }
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      done();
+    });
+  });
+
+  it('should allow specific magic numbers', function (done) {
+    var stream = loadLmnTask('js-quality', {
+      src: path.join(fixtures, 'bad-magic.js'),
+      magicAllowed: [876345],
+      onError: function () {
+        throw new Error('This should not have errored!');
+      }
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      done();
+    });
   });
 });
