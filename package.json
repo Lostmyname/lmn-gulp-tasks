@@ -65,6 +65,7 @@
   },
   "devDependencies": {
     "gulp-debug": "^2.0.1",
+    "hook-stdio": "^1.0.0",
     "lmn.jester.theme.default": "^0.13.1",
     "mocha": "^2.1.0",
     "should": "^5.0.0",

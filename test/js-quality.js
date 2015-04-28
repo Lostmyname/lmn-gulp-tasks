@@ -1,11 +1,10 @@
-/* global hookOnce, hookStdout */
-
 'use strict';
 
 var loadLmnTask = require('../');
 
 var path = require('path');
 var should = require('should');
+var hook = require('hook-stdio');
 
 var fixtures = path.join(__dirname, 'fixtures/js');
 
@@ -18,13 +17,14 @@ describe('js-quality', function () {
       }
     })();
 
-    stream.on('finish', function () {
+    stream.resume();
+    stream.on('end', function () {
       done();
     });
   });
 
   it('should die when JSCS error', function (done) {
-    loadLmnTask('js-quality', {
+    var stream = loadLmnTask('js-quality', {
       src: path.join(fixtures, 'bad-jscs.js'),
       onError: function (err) {
         var errString = err.toString();
@@ -33,29 +33,40 @@ describe('js-quality', function () {
 
         // Basically a way of counting the errors
         errString.split('bad-jscs.js').length.should.equal(8);
-
-        done();
       }
     })();
+
+    stream.resume();
+    stream.on('end', function () {
+      done();
+    });
   });
 
   it('should die when JSHint error', function (done) {
     // jshint-stylish outputs to the console
-    hookOnce(function (string) {
-      string.should.containEql('\'unused\' is defined but never used.');
+    var output = '';
+    var unhook = hook.stdout(function (string) {
+      output += string;
+    });
+
+    var stream = loadLmnTask('js-quality', {
+      src: path.join(fixtures, 'bad-jshint.js')
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      unhook();
+
+      output.should.containEql('\'unused\' is defined but never used.');
 
       done();
     });
-
-    loadLmnTask('js-quality', {
-      src: path.join(fixtures, 'bad-jshint.js')
-    })();
   });
 
   it('should test for magic numbers', function (done) {
     // gulp-buddy.js outputs to the console
     var output = '';
-    var unhook = hookStdout(function (string) {
+    var unhook = hook.stdout(function (string) {
       output += string;
     });
 
