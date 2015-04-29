@@ -115,6 +115,8 @@ gulp.task('js', getLmnTask('browserify', {
 being minified. In addition to minifying, the `minify` option will call
 strip-debug, which strips `console`, `alert` and `debugger` statements.
 
+This will remove multiple versions of jQuery and include the version from 
+
 ### clean
 
 This task deletes stuff. `src` can be either a string or an array.

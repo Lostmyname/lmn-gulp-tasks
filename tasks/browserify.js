@@ -1,8 +1,10 @@
 'use strict';
 
 var path = require('path');
+var fs = require('fs');
 var browserify = require('browserify');
-var transform = require('vinyl-transform');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var through = require('through2');
 var rev = require('../lib/rev');
 
@@ -21,15 +23,31 @@ module.exports = function (gulp, plugins, options) {
 
     var ignore = options.ignoreSuckyAntipattern;
 
-    var browserified = transform(function (filename) {
-      var b = browserify({ entries: filename, debug: options.sourcemaps });
-      return b.bundle();
+    var bundler = browserify({
+      entries: options.src,
+      debug: options.sourcemaps
     });
 
-    return gulp.src(options.src)
+    // Exclude the random versions of jQuery deps have required in
+    bundler.exclude('jquery');
+
+    // Add local jQuery only, if it exists
+    if (options.jquery !== false) {
+      var jqueryPath = path.join(process.cwd(), 'node_modules/jquery');
+
+      try {
+        // Access will throw if it doesn't exist
+        fs.accessSync(path.join(jqueryPath, 'package.json'));
+        bundler.require(jqueryPath);
+      } catch (e) {
+        console.log('jQuery couldn\'t be loaded, but that\'s okay');
+      }
+    }
+
+    return bundler.bundle()
+      .pipe(source(basename))
       .pipe(plugins.plumber({ errorHandler: options.onError }))
-      .pipe(browserified)
-      .pipe(plugins.rename(basename))
+      .pipe(buffer())
       .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
       .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
 
