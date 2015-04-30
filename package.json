@@ -37,9 +37,9 @@
     "gulp-imagemin": "^2.1.0",
     "gulp-jscs": "^1.4.0",
     "gulp-jshint": "^1.9.0",
-    "gulp-load-plugins": "^0.8.1",
-    "gulp-minify-css": "^0.4.2",
-    "gulp-plumber": "^0.6.6",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-minify-css": "^1.1.0",
+    "gulp-plumber": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-rev": "^3.0.0",
     "gulp-sass": "^1.3.2",
@@ -58,7 +58,7 @@
     "resolve": "^1.1.6",
     "rev-del": "^1.0.2",
     "rubbish-erb-parser": "^1.0.1",
-    "stylus": "^0.49.3",
+    "stylus": "^0.51.1",
     "through2": "^0.6.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-paths": "^1.0.0",
@@ -69,7 +69,7 @@
     "jquery": "^2.1.4",
     "lmn.jester.theme.default": "^0.13.1",
     "mocha": "^2.1.0",
-    "should": "^5.0.0",
+    "should": "^6.0.1",
     "vinyl-fs-fake": "^1.0.0"
   }
 }
