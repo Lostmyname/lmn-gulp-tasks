@@ -25,12 +25,9 @@ module.exports = function (gulp, plugins, options) {
     var ignore = options.ignoreSuckyAntipattern;
 
     var bundler = browserify({
-      entries: options.src,
-      debug: options.sourcemaps
+      debug: options.sourcemaps,
+      ignore: ['jquery']
     });
-
-    // Exclude the random versions of jQuery deps have required in
-    bundler.exclude('jquery');
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
@@ -45,6 +42,8 @@ module.exports = function (gulp, plugins, options) {
         }
       }
     }
+
+    bundler.add(options.src);
 
     return bundler.bundle()
       .pipe(source(basename))
