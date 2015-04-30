@@ -35,11 +35,9 @@ module.exports = function (gulp, plugins, options) {
     if (options.jquery !== false) {
       var jqueryPath = path.join(process.cwd(), 'node_modules/jquery');
 
-      try {
-        // Access will throw if it doesn't exist
-        fs.accessSync(path.join(jqueryPath, 'package.json'));
+      if (fs.existsSync(path.join(jqueryPath, 'package.json'))) {
         bundler.require(jqueryPath);
-      } catch (e) {
+      } else {
         console.log('jQuery couldn\'t be loaded, but that\'s okay');
       }
     }
