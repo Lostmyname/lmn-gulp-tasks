@@ -6,6 +6,7 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var through = require('through2');
+var resolve = require('resolve');
 var rev = require('../lib/rev');
 
 module.exports = function (gulp, plugins, options) {
@@ -33,12 +34,15 @@ module.exports = function (gulp, plugins, options) {
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
-      var jqueryPath = path.join(process.cwd(), 'node_modules/jquery');
-
-      if (fs.existsSync(path.join(jqueryPath, 'package.json'))) {
-        bundler.require(jqueryPath);
-      } else {
-        console.log('jQuery couldn\'t be loaded, but that\'s okay');
+      try {
+        var res = resolve.sync('jquery', { basedir: process.cwd() });
+        bundler.require(fs.createReadStream(res));
+      } catch (e) {
+        if (e.message.indexOf('Cannot find module') !== -1) {
+          console.log('jQuery couldn\'t be loaded, but that\'s okay');
+        } else {
+          throw e;
+        }
       }
     }
 
