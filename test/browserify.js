@@ -196,4 +196,29 @@ describe('browserify', function () {
       });
     });
   });
+
+  it('should support revisioning', function (done) {
+    var out = path.join(fixturesOut, 'simple.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'simple.js'),
+      sourcemaps: false,
+      jquery: false,
+      rev: true,
+      dest: out
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      fs.readdir(fixturesOut, function (err, files) {
+        if (err) {
+          done(err);
+        }
+
+        files.length.should.equal(2);
+        files[0].should.match(/simple-[a-f0-9]{8}\.js/);
+
+        done();
+      });
+    });
+  });
 });
