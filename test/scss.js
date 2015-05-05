@@ -160,7 +160,7 @@ describe('scss', function () {
       dest: function (files) {
         files.length.should.equal(2);
 
-        files[0].contents.toString().should.containEql('"sources":["test.scss"]');
+        files[0].contents.toString().should.match(/"sources":\["[^"]*test\.scss"\]/);
         files[1].contents.should.eql(getFile(p('test-out.min-with-src.css')));
 
         done();
