@@ -74,7 +74,9 @@ gulp.task('js', getLmnTask('browserify', {
 ```
 
 That'll create a fingerprinted version of the file, and write the path to a
-manifest file in the root directory.
+manifest file. The location of the manifest file is by default the root
+directory, but can be specified using the `manifest` options, which in turn
+defaults to `process.env.MANIFEST_DEST`.
 
 `rev` defaults to `process.env.NODE_ENV === 'production'`.
 
