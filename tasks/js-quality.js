@@ -20,7 +20,7 @@ module.exports = function (gulp, plugins, options) {
     var runBuddy = (magicAllowed !== true);
 
     stream = stream.pipe(plugins.jscs())
-      .pipe(runBuddy ? plugins.buddy({ ignore:  magicAllowed }) : through.obj())
+      .pipe(runBuddy ? plugins.buddy({ ignore: magicAllowed }) : through.obj())
       .pipe(plugins.jshint())
       .pipe(plugins.jshint.reporter(stylish));
 
