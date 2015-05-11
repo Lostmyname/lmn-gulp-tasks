@@ -160,8 +160,22 @@ describe('scss', function () {
       dest: function (files) {
         files.length.should.equal(2);
 
-        files[0].contents.toString().should.match(/"sources":\["[^"]*test\.scss"\]/);
+        files[0].contents.toString().should.containEql('"sources":[');
         files[1].contents.should.eql(getFile(p('test-out.min-with-src.css')));
+
+        done();
+      }
+    })();
+  });
+
+  it('should find paths in package.jsons', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'import-npm.scss'),
+      sourcemaps: false,
+      dest: function (files) {
+        files.length.should.equal(1);
+
+        files[0].contents.length.should.be.above(1000);
 
         done();
       }
