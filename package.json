@@ -69,7 +69,7 @@
     "gulp-debug": "^2.0.1",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
-    "lmn.jester.theme.default": "^0.13.1",
+    "lmn.jester.theme.default": "^0.15.8",
     "mocha": "^2.1.0",
     "should": "^6.0.1",
     "vinyl-fs-fake": "^1.0.0"
