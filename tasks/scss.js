@@ -36,7 +36,7 @@ module.exports = function (gulp, plugins, options) {
       // Sourcemap start
       .pipe(plugins.sass({
         imagePath: options.imagePath,
-        includePaths: includePaths,
+        includePaths: includePaths, // @todo: Deprecate includePaths?
         importer: sassNpmImporter
       }))
       .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
