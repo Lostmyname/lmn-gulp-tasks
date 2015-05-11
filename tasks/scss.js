@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var findNodeModules = require('find-node-modules');
 var rev = require('../lib/rev');
 var through = require('through2');
@@ -12,6 +13,11 @@ module.exports = function (gulp, plugins, options) {
 
     if (typeof options.sourcemaps !== 'boolean') {
       options.sourcemaps = process.env.SOURCEMAPS || true;
+    }
+
+    var manifest = 'rev-manifest.json';
+    if (options.manifest) {
+      manifest = path.join(options.manifest, manifest);
     }
 
     var includePaths;
@@ -40,7 +46,7 @@ module.exports = function (gulp, plugins, options) {
       .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
       .pipe(plugins.autoprefixer())
       .pipe(options.minify ? plugins.minifyCss() : through.obj())
-      .pipe(options.rev ? plugins.fingerprint('rev-manifest.json', {
+      .pipe(options.rev ? plugins.fingerprint(manifest, {
         prefix: '/',
         mode: 'replace'
       }) : through.obj())

@@ -167,4 +167,19 @@ describe('scss', function () {
       }
     })();
   });
+
+  it('should fingerprint images', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'fingerprint.scss'),
+      rev: true,
+      manifest: fixtures,
+      dest: function (files) {
+        files.length.should.equal(2);
+
+        files[1].contents.toString().should.containEql('image-blabla.jpg');
+
+        done();
+      }
+    })();
+  });
 });

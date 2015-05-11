@@ -40,6 +40,10 @@ module.exports = function getTask(name, options) {
     options.rev = (process.env.NODE_ENV === 'production');
   }
 
+  if (typeof options.manifest !== 'string') {
+    options.manifest = process.env.MANIFEST_DEST;
+  }
+
   // This means that you don't have to call this.emit('end') yourself
   var actualErrorHandler = options.onError;
   options.onError = function () {
