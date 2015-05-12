@@ -3,6 +3,7 @@
 var path = require('path');
 var findNodeModules = require('find-node-modules');
 var rev = require('../lib/rev');
+var sassNpmImporter = require('../lib/sass-npm-importer');
 var through = require('through2');
 
 module.exports = function (gulp, plugins, options) {
@@ -41,7 +42,8 @@ module.exports = function (gulp, plugins, options) {
       // Sourcemap start
       .pipe(plugins.sass({
         imagePath: options.imagePath,
-        includePaths: includePaths
+        includePaths: includePaths, // @todo: Deprecate includePaths?
+        importer: sassNpmImporter
       }))
       .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
       .pipe(plugins.autoprefixer())

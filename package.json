@@ -43,7 +43,7 @@
     "gulp-plumber": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-rev": "^3.0.0",
-    "gulp-sass": "^1.3.2",
+    "gulp-sass": "^2.0.0",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-strip-debug": "^1.0.2",
     "gulp-svg2png": "^0.3.0",
@@ -69,7 +69,7 @@
     "gulp-debug": "^2.0.1",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
-    "lmn.jester.theme.default": "^0.13.1",
+    "lmn.jester.theme.default": "^0.15.8",
     "mocha": "^2.1.0",
     "should": "^6.0.1",
     "vinyl-fs-fake": "^1.0.0"
