@@ -1,4 +1,4 @@
 node_modules
 *.log
 test/fixtures/out
-rev-manifest.json
+/rev-manifest.json
