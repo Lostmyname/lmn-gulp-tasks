@@ -114,6 +114,24 @@ describe('scss', function () {
     })();
   });
 
+  it('should handle image-path', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'image-path.scss'),
+      imagePath: '/what/ever',
+      sourcemaps: false,
+      dest: function (files) {
+        files.length.should.equal(1);
+
+        var contents = files[0].contents.toString('utf8');
+
+        contents.should.not.containEql('image-url');
+        contents.should.containEql('/what/ever/man.jpg');
+
+        done();
+      }
+    })();
+  });
+
   it('should be autoprefixed', function (done) {
     loadLmnTask('scss', {
       src: path.join(fixtures, 'prefix.scss'),

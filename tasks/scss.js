@@ -32,6 +32,11 @@ module.exports = function (gulp, plugins, options) {
       }
     }
 
+    function imageUrl(imagePath) {
+      var returnPath = path.join(options.imagePath || '', imagePath.getValue());
+      return new plugins.sass.compiler.types.String('url("' + returnPath + '")');
+    }
+
     var ignore = options.ignoreSuckyAntipattern;
 
     return gulp.src(options.src)
@@ -41,7 +46,7 @@ module.exports = function (gulp, plugins, options) {
 
       // Sourcemap start
       .pipe(plugins.sass({
-        imagePath: options.imagePath,
+        functions: { 'image-url($imagePath)': imageUrl },
         includePaths: includePaths, // @todo: Deprecate includePaths?
         importer: sassNpmImporter
       }))
