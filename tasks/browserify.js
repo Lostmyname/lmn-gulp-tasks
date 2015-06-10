@@ -32,14 +32,16 @@ module.exports = function (gulp, plugins, options) {
 
     // The ignore is for the jQuery stream below
     bundler.transform(babelify.configure({
-      ignore: /_stream_0\.js/
+      ignore: /jquery\-browserify\.js/
     }));
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
       try {
         var res = resolve.sync('jquery', { basedir: process.cwd() });
-        bundler.require(fs.createReadStream(res));
+        var stream = fs.createReadStream(res);
+        stream.file = 'jquery-browserify.js';
+        bundler.require(stream);
       } catch (e) {
         if (e.message.indexOf('Cannot find module') !== -1) {
           console.log('jQuery couldn\'t be loaded, but that\'s okay');
