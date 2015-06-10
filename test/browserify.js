@@ -196,4 +196,25 @@ describe('browserify', function () {
       });
     });
   });
+
+  it('should handle ~~ES2015~~', function (done) {
+    var out = path.join(fixturesOut, 'simple.babel.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'simple.babel.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: out
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      var file = getFile(out);
+
+      file.length.should.be.within(550, 650);
+      file.toString().should.containEql('\'click\', function () {');
+      file.toString().should.not.containEql('=>');
+
+      done();
+    });
+  });
 });

@@ -2,6 +2,7 @@
 
 var path = require('path');
 var fs = require('fs');
+var babelify = require('babelify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -28,6 +29,11 @@ module.exports = function (gulp, plugins, options) {
       debug: options.sourcemaps,
       ignore: ['jquery']
     });
+
+    // The ignore is for the jQuery stream below
+    bundler.transform(babelify.configure({
+      ignore: /_stream_0\.js/
+    }));
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
