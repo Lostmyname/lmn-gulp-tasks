@@ -54,6 +54,26 @@ describe('browserify', function () {
     });
   });
 
+  it('should handle es6 imports', function (done) {
+    var out = path.join(fixturesOut, 'import.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'import.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: out
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      var file = getFile(out);
+
+      file.length.should.be.within(770, 870);
+      file.toString().should.containEql('test');
+
+      done();
+    });
+  });
+
   it('should object to ../node_modules', function (done) {
     loadLmnTask('browserify', {
       src: path.join(fixtures, 'bad-import.js'),
