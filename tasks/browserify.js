@@ -32,6 +32,7 @@ module.exports = function (gulp, plugins, options) {
 
     // The ignore is for the jQuery stream below
     bundler.transform(babelify.configure({
+      blacklist: ['es6.blockScoping', 'es6.classes', 'es6.constants'],
       ignore: /jquery\-browserify\.js/
     }));
 

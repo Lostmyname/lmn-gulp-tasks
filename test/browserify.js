@@ -217,4 +217,29 @@ describe('browserify', function () {
       done();
     });
   });
+
+  it('should not parse let or classes', function (done) {
+    var out = path.join(fixturesOut, 'bad-es6.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'bad-es6.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: out
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      var file = getFile(out);
+
+      var contents = file.toString();
+
+      contents.should.containEql('class Test {');
+      contents.should.not.containEql('function Test()');
+
+      contents.should.containEql('let hello');
+      contents.should.not.containEql('var hello');
+
+      done();
+    });
+  });
 });
