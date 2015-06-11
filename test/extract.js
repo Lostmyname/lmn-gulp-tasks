@@ -2,7 +2,7 @@
 
 'use strict';
 
-var loadLmnTask = require('../');
+import loadLmnTask from '../index';
 
 describe('extract', function () {
   it('should extract stuff. duh.', function (done) {

@@ -2,10 +2,10 @@
 
 'use strict';
 
-var loadLmnTask = require('../');
+import loadLmnTask from '../index';
 
-var path = require('path');
-var _ = require('lodash');
+import path from 'path';
+import _ from 'lodash';
 
 var fixtures = path.join(__dirname, 'fixtures/sass');
 var p = _.partial(path.join, fixtures);

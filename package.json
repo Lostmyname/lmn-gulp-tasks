@@ -4,7 +4,7 @@
   "description": "Generic Gulp tasks used in Lost My Name components and projects",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
@@ -67,6 +67,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
+    "babel": "^5.5.6",
     "gulp-debug": "^2.0.1",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",

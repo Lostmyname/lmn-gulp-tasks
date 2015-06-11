@@ -2,11 +2,11 @@
 
 'use strict';
 
-var loadLmnTask = require('../');
+import loadLmnTask from '../index';
 
-var path = require('path');
-var should = require('should');
-var _ = require('lodash');
+import path from 'path';
+import should from 'should';
+import _ from 'lodash';
 
 var fixtures = path.join(__dirname, 'fixtures/js/**');
 var fixturesOut = path.join(__dirname, 'fixtures/out');

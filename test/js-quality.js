@@ -1,10 +1,10 @@
 'use strict';
 
-var loadLmnTask = require('../');
+import loadLmnTask from '../index';
 
-var path = require('path');
-var should = require('should');
-var hook = require('hook-stdio');
+import path from 'path';
+import should from 'should';
+import hook from 'hook-stdio';
 
 var fixtures = path.join(__dirname, 'fixtures/js');
 
