@@ -14,6 +14,9 @@ describe('browserify', function () {
   beforeEach(clean);
   afterEach(clean);
 
+  // For some reason this speeds up the first task
+  before(() => loadLmnTask('browserify', {}));
+
   it('should parse simple js', function (done) {
     var out = path.join(fixturesOut, 'simple.js');
     var stream = loadLmnTask('browserify', {
