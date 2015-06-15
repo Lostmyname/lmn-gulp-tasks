@@ -32,6 +32,7 @@ module.exports = function (gulp, plugins, options) {
 
     bundler.transform(babelify.configure({
       blacklist: ['es6.blockScoping', 'es6.classes', 'es6.constants'],
+      loose: ['es6.modules'],
       ignore: /jquery\-browserify\.js/
     }));
 
