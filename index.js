@@ -9,14 +9,14 @@ var plugins = require('gulp-load-plugins')({
 });
 
 // Default error handler. Sends to browser-sync, and logs to console.
-function errorHandler(err) {
+var errorHandler = function (err) {
   browserSync.notify(err.message, 3000);
   plugins.util.log(err.toString());
 
   if (process.argv.indexOf('--fail') !== -1) {
-    process.exit(1);
+    throw new Error('Failed');
   }
-}
+};
 
 /**
  * Get a task. This function just gets a task from the tasks directory, and
@@ -28,7 +28,7 @@ function errorHandler(err) {
  * @returns {function} The task!
  */
 module.exports = function getTask(name, options) {
-  if (typeof options !== 'object')  {
+  if (typeof options !== 'object') {
     options = {};
   }
 

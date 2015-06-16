@@ -33,6 +33,7 @@
     "gulp-changed": "^1.1.1",
     "gulp-clone": "^1.0.0",
     "gulp-contains": "^1.0.0",
+    "gulp-eslint": "^0.14.0",
     "gulp-fingerprint": "^0.3.2",
     "gulp-gm": "0.0.7",
     "gulp-if": "^1.2.5",
