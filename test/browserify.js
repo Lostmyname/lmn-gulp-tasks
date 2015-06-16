@@ -15,7 +15,10 @@ describe('browserify', function () {
   afterEach(clean);
 
   // For some reason this speeds up the first task
-  before(() => loadLmnTask('browserify', {}));
+  before(function () {
+    this.timeout(3000);
+    loadLmnTask('browserify', {});
+  });
 
   it('should parse simple js', function (done) {
     var out = path.join(fixturesOut, 'simple.js');
