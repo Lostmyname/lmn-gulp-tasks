@@ -33,7 +33,7 @@ module.exports = function (gulp, plugins, options) {
     }
 
     function imageUrl(imagePath) {
-      var returnPath = path.join(options.imagePath || '', imagePath.getValue());
+      var returnPath = (options.imagePath || '') + path.join('/', imagePath.getValue());
       return new plugins.sass.compiler.types.String('url("' + returnPath + '")');
     }
 
