@@ -214,4 +214,21 @@ describe('scss', function () {
       }
     })();
   });
+
+  it('should not destroy remote images', function (done) {
+    loadLmnTask('scss', {
+      src: path.join(fixtures, 'issue-14.scss'),
+      minify: false,
+      sourcemaps: false,
+      imagePath: 'http://localhost',
+      dest: function (files) {
+        files.length.should.equal(1);
+
+        var contents = files[0].contents.toString();
+        contents.should.containEql('url("http://localhost/test.png");');
+
+        done();
+      }
+    })();
+  });
 });
