@@ -244,7 +244,7 @@ describe('browserify', function () {
     });
   });
 
-  it('should not parse let or classes', function (done) {
+  it('should not parse classes', function (done) {
     var out = path.join(fixturesOut, 'bad-es6.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'bad-es6.js'),
@@ -261,9 +261,6 @@ describe('browserify', function () {
 
       contents.should.containEql('class Test {');
       contents.should.not.containEql('function Test()');
-
-      contents.should.containEql('let hello');
-      contents.should.not.containEql('var hello');
 
       done();
     });
