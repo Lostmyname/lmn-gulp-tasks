@@ -199,8 +199,8 @@ gulp.task('html', getLmnTask('html', {
 
 ### js-quality
 
-This task runs JSCS, JSHint and [buddy.js] on your JavaScript, and optionally
-stops Gulp if an error is found.
+This task runs ESLint on your JavaScript, and optionally stops Gulp if an
+error is found.
 
 ```js
 gulp.task('js-quality', getLmnTask('js-quality', {
@@ -212,12 +212,7 @@ gulp.task('js-quality', getLmnTask('js-quality', {
 `dieOnError` defaults to false, so if you miss that option out, Gulp will not
 die.
 
-buddy.js is a magic number detection script. If you pass 17 to a function, it
-will error! Don't pass 17 to functions, pass `GUTTER_WIDTH` instead, because
-then nobody needs to read the docs to know waht you're doing.
-
-If you want to disable this behaviour, you can pass in `magicAllowed: true`.
-If you want to allow other numbers, try `magicAllowed: [0, 0.5, 1, 2, 17]`.
+Prior to 2.0.0, lmn-gulp-task used JSHint, JSCS, and Buddy.js.
 
 ### optimise-svgs*
 
