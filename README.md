@@ -256,6 +256,11 @@ file size, and it's not noticeable unless you look hard. You can see in the
 example code above that we compress everything but the header images using a
 lossy compression.
 
+There are also two options called `skipResize` and `skipOptimize` that you want
+to set true only on the certain situation. For example, they would be useful when
+you run integration tests on CI. It skips resizing but copies images with the
+publishing names. Both are false in default.
+
 ### scss*
 
 The scss tasks runs compass on one or more specified SCSS files, then runs
