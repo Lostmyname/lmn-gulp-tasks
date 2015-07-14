@@ -16,7 +16,7 @@ module.exports = function (gulp, plugins, options) {
       .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(handleRename('-xlarge'))
       .pipe(handleChanged())
-      .pipe(handleOptimize())
+      .pipe(plugins.if(!options.skipOptimize, handleOptimize()))
       .pipe(gulp.dest(options.dest));
 
     imageTasks.push(stream);
@@ -26,10 +26,10 @@ module.exports = function (gulp, plugins, options) {
     // Deal with each size separately
     _.each(sizes, function (factor, suffix) {
       var stream = images.pipe(plugins.clone())
-        .pipe(handleResize(factor))
+        .pipe(plugins.if(!options.skipResize, handleResize(factor)))
         .pipe(handleRename('-' + suffix))
         .pipe(handleChanged())
-        .pipe(handleOptimize())
+        .pipe(plugins.if(!options.skipOptimize, handleOptimize()))
         .pipe(gulp.dest(options.dest));
 
       imageTasks.push(stream);
