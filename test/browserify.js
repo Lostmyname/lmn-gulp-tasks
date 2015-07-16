@@ -265,4 +265,26 @@ describe('browserify', function () {
       done();
     });
   });
+
+  it('should get environmental variables', function (done) {
+    process.env.TESTING_STRING = 'blablabla1234';
+
+    var out = path.join(fixturesOut, 'env.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'env.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: out
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      var file = getFile(out);
+
+      file.length.should.be.within(450, 550);
+      file.toString().should.containEql('console.log("blablabla1234");');
+
+      done();
+    });
+  });
 });

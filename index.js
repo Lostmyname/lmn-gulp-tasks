@@ -1,5 +1,8 @@
 'use strict';
 
+// Set up environmental vars from .env
+require('dotenv').load({ silent: true });
+
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
 var plugins = require('gulp-load-plugins')({
