@@ -26,9 +26,9 @@ module.exports = function (gulp, plugins, options) {
     // Deal with each size separately
     _.each(sizes, function (factor, suffix) {
       var stream = images.pipe(plugins.clone())
-        .pipe(plugins.if(!options.skipResize, handleResize(factor)))
         .pipe(handleRename('-' + suffix))
         .pipe(handleChanged())
+        .pipe(plugins.if(!options.skipResize, handleResize(factor)))
         .pipe(plugins.if(!options.skipOptimize, handleOptimize()))
         .pipe(gulp.dest(options.dest));
 
