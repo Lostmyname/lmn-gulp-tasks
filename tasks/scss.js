@@ -54,8 +54,7 @@ module.exports = function (gulp, plugins, options) {
       .pipe(plugins.autoprefixer())
       .pipe(options.minify ? plugins.minifyCss() : through.obj())
       .pipe(options.rev ? plugins.fingerprint(manifest, {
-        prefix: '/',
-        mode: 'replace'
+        prefix: '/'
       }) : through.obj())
       // Sourcemap end
 
