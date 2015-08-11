@@ -26,6 +26,10 @@ module.exports = function (gulp, plugins, options) {
     // Deal with each size separately
     _.each(sizes, function (factor, suffix) {
       var stream = images.pipe(plugins.clone())
+        .pipe(through.obj(function(file, enc, cb) {
+          this.originalPath = file.path;
+          cb();
+        }))
         .pipe(handleRename('-' + suffix))
         .pipe(handleChanged())
         .pipe(plugins.if(!options.skipResize, handleResize(factor)))
@@ -69,6 +73,13 @@ module.exports = function (gulp, plugins, options) {
   // Use gulp-gm to resize the image
   function handleResize(factor) {
     return plugins.gm(function (gmfile) {
+      // Instead of looking at the source we need to check the originalPath
+      // however this doesn't seem to Work
+      // console.log(gmfile.source, gmfile.originalPath);
+      // console.log("Source", _.contains(gmfile.source, '@2x'));
+      // console.log("Original Path", _.contains(gmfile.originalPath, '@2x'));
+      // var newFactor = _.contains(gmfile.originalPath, '@2x') ? factor / 2 : factor;
+
       var newFactor = _.contains(gmfile.source, '@2x') ? factor / 2 : factor;
 
       if (newFactor === 100) {
