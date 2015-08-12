@@ -75,22 +75,22 @@ module.exports = function (gulp, plugins, options) {
 
   // Use gulp-gm to resize the image
   function handleResize(factor) {
-    return through.obj(function (file, enc, callback) {
+    return through.obj(function (file, enc, cb) {
       var newFactor = _.contains(file.originalPath, '@2x') ? factor / 2 : factor;
 
       if (newFactor === 100) {
-        return callback(null, file);
+        return cb(null, file);
       }
 
       gm(file.contents, file.path)
         .resize(newFactor, newFactor, '%')
         .toBuffer(function (err, buffer) {
           if (err) {
-            return callback(err);
+            return cb(err);
           }
 
           file.contents = buffer;
-          callback(null, file);
+          cb(null, file);
         });
     });
   }
