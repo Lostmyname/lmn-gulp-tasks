@@ -4,6 +4,9 @@ var _ = require('lodash');
 var jpegoptim = require('imagemin-jpegoptim');
 var mergeStream = require('merge-stream');
 var rev = require('../lib/rev');
+var through = require('through2');
+var gm = require('gm').subClass({ imageMagick: true });
+
 
 module.exports = function (gulp, plugins, options) {
   return function () {
@@ -26,9 +29,9 @@ module.exports = function (gulp, plugins, options) {
     // Deal with each size separately
     _.each(sizes, function (factor, suffix) {
       var stream = images.pipe(plugins.clone())
-        .pipe(through.obj(function(file, enc, cb) {
-          this.originalPath = file.path;
-          cb();
+        .pipe(through.obj(function (file, enc, cb) {
+          file.originalPath = file.path;
+          cb(null, file);
         }))
         .pipe(handleRename('-' + suffix))
         .pipe(handleChanged())
@@ -72,22 +75,24 @@ module.exports = function (gulp, plugins, options) {
 
   // Use gulp-gm to resize the image
   function handleResize(factor) {
-    return plugins.gm(function (gmfile) {
-      // Instead of looking at the source we need to check the originalPath
-      // however this doesn't seem to Work
-      // console.log(gmfile.source, gmfile.originalPath);
-      // console.log("Source", _.contains(gmfile.source, '@2x'));
-      // console.log("Original Path", _.contains(gmfile.originalPath, '@2x'));
-      // var newFactor = _.contains(gmfile.originalPath, '@2x') ? factor / 2 : factor;
-
-      var newFactor = _.contains(gmfile.source, '@2x') ? factor / 2 : factor;
+    return through.obj(function (file, enc, done) {
+      var newFactor = _.contains(file.originalPath, '@2x') ? factor / 2 : factor;
 
       if (newFactor === 100) {
-        return gmfile;
+        return done(null, file);
       }
 
-      return gmfile.resize(newFactor, newFactor, '%');
-    }, { imageMagick: true });
+      gm(file.contents, file.path)
+        .resize(newFactor, newFactor, '%')
+        .toBuffer(function (err, buffer) {
+          if (err) {
+            return done(err);
+          }
+
+          file.contents = buffer;
+          done(null, file);
+        });
+    });
   }
 
   // Compress images
