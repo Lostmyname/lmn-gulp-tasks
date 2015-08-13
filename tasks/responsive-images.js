@@ -4,6 +4,9 @@ var _ = require('lodash');
 var jpegoptim = require('imagemin-jpegoptim');
 var mergeStream = require('merge-stream');
 var rev = require('../lib/rev');
+var through = require('through2');
+var gm = require('gm').subClass({ imageMagick: true });
+
 
 module.exports = function (gulp, plugins, options) {
   return function () {
@@ -26,9 +29,13 @@ module.exports = function (gulp, plugins, options) {
     // Deal with each size separately
     _.each(sizes, function (factor, suffix) {
       var stream = images.pipe(plugins.clone())
-        .pipe(plugins.if(!options.skipResize, handleResize(factor)))
+        .pipe(through.obj(function (file, enc, cb) {
+          file.originalPath = file.path;
+          cb(null, file);
+        }))
         .pipe(handleRename('-' + suffix))
         .pipe(handleChanged())
+        .pipe(plugins.if(!options.skipResize, handleResize(factor)))
         .pipe(plugins.if(!options.skipOptimize, handleOptimize()))
         .pipe(gulp.dest(options.dest));
 
@@ -68,15 +75,24 @@ module.exports = function (gulp, plugins, options) {
 
   // Use gulp-gm to resize the image
   function handleResize(factor) {
-    return plugins.gm(function (gmfile) {
-      var newFactor = _.contains(gmfile.source, '@2x') ? factor / 2 : factor;
+    return through.obj(function (file, enc, cb) {
+      var newFactor = _.contains(file.originalPath, '@2x') ? factor / 2 : factor;
 
       if (newFactor === 100) {
-        return gmfile;
+        return cb(null, file);
       }
 
-      return gmfile.resize(newFactor, newFactor, '%');
-    }, { imageMagick: true });
+      gm(file.contents, file.path)
+        .resize(newFactor, newFactor, '%')
+        .toBuffer(function (err, buffer) {
+          if (err) {
+            return cb(err);
+          }
+
+          file.contents = buffer;
+          cb(null, file);
+        });
+    });
   }
 
   // Compress images
