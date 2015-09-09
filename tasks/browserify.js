@@ -9,6 +9,8 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var through = require('through2');
 var resolve = require('resolve');
+var _ = require('lodash');
+var watchify = require('watchify');
 var rev = require('../lib/rev');
 
 module.exports = function (gulp, plugins, options) {
@@ -26,10 +28,24 @@ module.exports = function (gulp, plugins, options) {
 
     var ignore = options.ignoreSuckyAntipattern;
 
-    var bundler = browserify({
+    var opts = {
       debug: options.sourcemaps,
       ignore: ['jquery']
-    });
+    };
+
+    if (options.watch) {
+      opts = _.assign({}, watchify.args, opts);
+    }
+
+    var bundler = browserify(opts);
+
+    if (options.watch) {
+      bundler = watchify(bundler);
+      bundler.on('update', bundle);
+      bundler.on('log', function (msg) {
+        console.log('Browserify:', msg);
+      });
+    }
 
     bundler.transform(babelify.configure({
       blacklist: ['es6.classes'],
@@ -57,20 +73,26 @@ module.exports = function (gulp, plugins, options) {
 
     bundler.add(options.src);
 
-    return bundler.bundle()
-      .pipe(source(basename))
-      .pipe(plugins.plumber({ errorHandler: options.onError }))
-      .pipe(buffer())
-      .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
-      .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
+    function bundle() {
+      console.log('Browserify: Bundling');
 
-      // Sourcemaps start
-      .pipe(options.minify ? plugins.uglify() : through.obj())
-      .pipe(options.minify ? plugins.stripDebug() : through.obj())
-      // Sourcemaps end
+      return bundler.bundle()
+        .pipe(source(basename))
+        .pipe(plugins.plumber({ errorHandler: options.onError }))
+        .pipe(buffer())
+        .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
+        .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
 
-      .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
-      .pipe(gulp.dest(options.dest))
-      .pipe(rev(gulp, plugins, options));
+        // Sourcemaps start
+        .pipe(options.minify ? plugins.uglify() : through.obj())
+        .pipe(options.minify ? plugins.stripDebug() : through.obj())
+        // Sourcemaps end
+
+        .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
+        .pipe(gulp.dest(options.dest))
+        .pipe(rev(gulp, plugins, options));
+    }
+
+    return bundle();
   };
 };
