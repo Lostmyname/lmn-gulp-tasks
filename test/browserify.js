@@ -154,7 +154,7 @@ describe('browserify', function () {
 
       var map = getFile(mapOut, false);
 
-      map.length.should.be.within(650, 800);
+      map.length.should.be.within(1150, 1250);
 
       var sources = {
         sources: [
@@ -283,6 +283,30 @@ describe('browserify', function () {
 
       file.length.should.be.within(450, 550);
       file.toString().should.containEql('console.log("blablabla1234");');
+
+      done();
+    });
+  });
+
+  it('should support react and jsx', function (done) {
+    var out = path.join(fixturesOut, 'bad-es6.js');
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'react.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: out
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      var file = getFile(out);
+
+      var contents = file.toString();
+
+      contents.should.match(/'div',\s+null,\s+'Teststring123'/);
+      contents.should.not.containEql('<div>Teststring123</div>');
+
+      contents.length.should.be.within(624500, 625000);
 
       done();
     });

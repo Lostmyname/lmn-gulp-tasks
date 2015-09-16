@@ -57,6 +57,7 @@
     "lodash": "^3.1.0",
     "merge-stream": "^0.1.7",
     "multipipe": "^0.1.2",
+    "reactify": "^1.1.1",
     "resolve": "^1.1.6",
     "rev-del": "^1.0.2",
     "rubbish-erb-parser": "^1.0.1",
@@ -74,6 +75,7 @@
     "jquery": "^2.1.4",
     "lmn.jester.theme.default": "^0.15.8",
     "mocha": "^2.1.0",
+    "react": "^0.13.3",
     "should": "^6.0.1",
     "vinyl-fs-fake": "^1.0.0"
   }

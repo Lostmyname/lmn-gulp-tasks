@@ -4,6 +4,7 @@ var path = require('path');
 var fs = require('fs');
 var babelify = require('babelify');
 var browserify = require('browserify');
+var reactify = require('reactify');
 var envify = require('envify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -54,6 +55,7 @@ module.exports = function (gulp, plugins, options) {
     }));
 
     bundler.transform(envify);
+    bundler.transform(reactify);
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
