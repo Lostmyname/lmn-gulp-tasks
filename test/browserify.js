@@ -154,7 +154,7 @@ describe('browserify', function () {
 
       var map = getFile(mapOut, false);
 
-      map.length.should.be.within(1150, 1250);
+      map.length.should.be.within(650, 800);
 
       var sources = {
         sources: [
@@ -294,6 +294,7 @@ describe('browserify', function () {
       src: path.join(fixtures, 'react.js'),
       sourcemaps: false,
       jquery: false,
+      react: true,
       dest: out
     })();
 

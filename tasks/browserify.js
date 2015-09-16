@@ -55,7 +55,10 @@ module.exports = function (gulp, plugins, options) {
     }));
 
     bundler.transform(envify);
-    bundler.transform(reactify);
+
+    if (options.react) {
+      bundler.transform(reactify);
+    }
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
