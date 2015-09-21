@@ -82,6 +82,7 @@ module.exports = function (gulp, plugins, options) {
       console.log('Browserify: Bundling');
 
       return bundler.bundle()
+        .on('error', options.onError)
         .pipe(source(basename))
         .pipe(plugins.plumber({ errorHandler: options.onError }))
         .pipe(buffer())
