@@ -16,7 +16,7 @@ module.exports = function (gulp, plugins, options) {
       .pipe(gulp.dest(options.dest));
 
     // Make optimised PNG fallbacks
-    var pngStream = svgStream.pipe(plugins.svg2png())
+    var pngStream = svgStream//.pipe(plugins.svg2png())
       .pipe(plugins.rename({ extname: '.png' }))
       .pipe(plugins.imagemin({ progressive: true }))
       .pipe(gulp.dest(options.dest));
