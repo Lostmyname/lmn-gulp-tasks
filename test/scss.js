@@ -179,7 +179,7 @@ describe('scss', function () {
         files.length.should.equal(2);
 
         files[0].contents.toString().should.containEql('"sources":[');
-        files[1].contents.should.eql(getFile(p('test-out.min-with-src.css')));
+        files[1].contents.should.eql(getFile(p('test-out.min-with-src.css'), false));
 
         done();
       }

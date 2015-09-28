@@ -23,7 +23,7 @@
     "babelify": "^6.1.2",
     "browser-sync": "^2.0.1",
     "browserify": "^11.2.0",
-    "del": "^1.1.1",
+    "del": "^2.0.2",
     "delve": "^0.3.2",
     "dotenv": "^1.2.0",
     "envify": "^3.4.0",
