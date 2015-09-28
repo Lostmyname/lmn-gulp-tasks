@@ -39,7 +39,7 @@ describe('js-quality', function () {
       output.should.containEql('space-in-parens');
 
       // Basically a way of counting the errors
-      output.split('error').length.should.equal(6);
+      output.split('error').length.should.equal(5);
 
       done();
     });
@@ -59,7 +59,7 @@ describe('js-quality', function () {
     stream.on('end', function () {
       unhook();
 
-      output.should.containEql('unused is defined but never used');
+      output.should.containEql('"unused" is defined but never used');
 
       done();
     });
