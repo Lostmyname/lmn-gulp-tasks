@@ -4,24 +4,24 @@ var mergeStream = require('merge-stream');
 var through = require('through2');
 var rev = require('../lib/rev');
 
-module.exports = function (gulp, plugins, options) {
+module.exports = function (vinyl, plugins, options) {
   return function () {
 
     // Optimise SVGs
-    var svgStream = gulp.src(options.src)
+    var svgStream = vinyl.src(options.src)
       .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(options.flatten ? plugins.rename({ dirname: '' }) : through.obj())
       .pipe(plugins.changed(options.dest))
       .pipe(plugins.imagemin({ svgoPlugins: [{ removeViewBox: false }] }))
-      .pipe(gulp.dest(options.dest));
+      .pipe(vinyl.dest(options.dest));
 
     // Make optimised PNG fallbacks
     var pngStream = svgStream.pipe(plugins.svg2png())
       .pipe(plugins.rename({ extname: '.png' }))
       .pipe(plugins.imagemin({ progressive: true }))
-      .pipe(gulp.dest(options.dest));
+      .pipe(vinyl.dest(options.dest));
 
     return mergeStream(pngStream, svgStream)
-      .pipe(rev(gulp, plugins, options));
+      .pipe(rev(vinyl, plugins, options));
   };
 };

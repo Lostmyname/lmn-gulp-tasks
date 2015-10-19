@@ -6,7 +6,7 @@ var through = require('through2');
 
 var locales = ['en-US', 'de', 'en-GB']; // en-GB is blank in paths
 
-module.exports = function (gulp, plugins, options) {
+module.exports = function (vinyl, plugins, options) {
   function wrap(locale) {
     return (locale === 'en-GB' ? '' : '-' + locale) + '.';
   }
@@ -22,7 +22,7 @@ module.exports = function (gulp, plugins, options) {
 
     var errors = false;
 
-    return gulp.src(localesGlob, { read: false })
+    return vinyl.src(localesGlob, { read: false })
       .pipe(plugins.plumber({
         errorHandler: function (err) {
           plugins.util.log(plugins.util.colors.red(err.message));

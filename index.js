@@ -4,12 +4,8 @@
 require('dotenv').load({ silent: true });
 
 var browserSync = require('browser-sync');
-var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')({
-  rename: {
-    'gulp-buddy.js': 'buddy'
-  }
-});
+var vinyl = require('./lib/vinyl');
+var plugins = require('gulp-load-plugins')();
 
 // Default error handler. Sends to browser-sync, and logs to console.
 var errorHandler = function (err) {
@@ -54,7 +50,7 @@ module.exports = function getTask(name, options) {
     this.emit('end');
   };
 
-  return require('./tasks/' + name)(gulp, plugins, options);
+  return require('./tasks/' + name)(vinyl, plugins, options);
 };
 
 /**

@@ -6,7 +6,7 @@ var rev = require('../lib/rev');
 var sassNpmImporter = require('../lib/sass-npm-importer');
 var through = require('through2');
 
-module.exports = function (gulp, plugins, options) {
+module.exports = function (vinyl, plugins, options) {
   return function scssTask() {
     if (typeof options.minify !== 'boolean') {
       options.minify = process.env.MINIFY_ASSETS || false;
@@ -39,7 +39,7 @@ module.exports = function (gulp, plugins, options) {
 
     var ignore = options.ignoreSuckyAntipattern;
 
-    return gulp.src(options.src)
+    return vinyl.src(options.src)
       .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
       .pipe(options.sourcemaps ? plugins.sourcemaps.init() : through.obj())
@@ -59,7 +59,7 @@ module.exports = function (gulp, plugins, options) {
       // Sourcemap end
 
       .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
-      .pipe(gulp.dest(options.dest))
-      .pipe(rev(gulp, plugins, options));
+      .pipe(vinyl.dest(options.dest))
+      .pipe(rev(vinyl, plugins, options));
   };
 };

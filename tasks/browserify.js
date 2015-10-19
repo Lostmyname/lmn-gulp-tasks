@@ -14,7 +14,7 @@ var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
 
-module.exports = function (gulp, plugins, options) {
+module.exports = function (vinyl, plugins, options) {
   var basename = path.basename(options.dest);
   options.dest = path.dirname(options.dest);
 
@@ -95,8 +95,8 @@ module.exports = function (gulp, plugins, options) {
         // Sourcemaps end
 
         .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
-        .pipe(gulp.dest(options.dest))
-        .pipe(rev(gulp, plugins, options));
+        .pipe(vinyl.dest(options.dest))
+        .pipe(rev(vinyl, plugins, options));
     }
 
     return bundle();

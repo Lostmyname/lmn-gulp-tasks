@@ -30,7 +30,6 @@
     "find-node-modules": "^1.0.1",
     "findup-sync": "^0.3.0",
     "gm": "^1.18.1",
-    "gulp": "gulpjs/gulp#1ab1d2ad9ece791cf19b80c8f13fd02b05949a1e",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-changed": "^1.1.1",
     "gulp-clone": "^1.0.0",
@@ -61,6 +60,7 @@
     "rubbish-erb-parser": "^1.0.1",
     "through2": "^2.0.0",
     "vinyl-buffer": "^1.0.0",
+    "vinyl-fs": "^2.2.0",
     "vinyl-paths": "^2.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.4.0"

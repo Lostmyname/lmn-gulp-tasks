@@ -85,20 +85,6 @@ defaults to `process.env.MANIFEST_DEST`.
 
 ## Tasks
 
-### auto-reload
-
-When you run this task, it will watch the gulpfile for changes and restart
-Gulp when a change is made. In addition, there is an `addArgs` option which
-will add an argument to the Gulp call on every run that isn't the first one:
-useful if you only want BrowserSync to open a browser on the first run, for
-example.
-
-```js
-gulp.task('auto-reload', getLmnTask('auto-reload', {
-  addArgs: ['--no-open']
-}));
-```
-
 ### browserify*
 
 We use browserify on nearly all of our JavaScript at Lost My Name. This very

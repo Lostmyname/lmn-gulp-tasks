@@ -8,19 +8,19 @@ var through = require('through2');
 var gm = require('gm').subClass({ imageMagick: true });
 
 
-module.exports = function (gulp, plugins, options) {
+module.exports = function (vinyl, plugins, options) {
   return function () {
-    var images = gulp.src(options.src)
+    var images = vinyl.src(options.src)
       .pipe(plugins.plumber({ errorHandler: options.onError }));
     var imageTasks = [];
 
     // Special case for retina images
-    var stream = gulp.src(options.retinaSrc || getRetinaSrc(options.src))
+    var stream = vinyl.src(options.retinaSrc || getRetinaSrc(options.src))
       .pipe(plugins.plumber({ errorHandler: options.onError }))
       .pipe(handleRename('-xlarge'))
       .pipe(handleChanged())
       .pipe(plugins.if(!options.skipOptimize, handleOptimize()))
-      .pipe(gulp.dest(options.dest));
+      .pipe(vinyl.dest(options.dest));
 
     imageTasks.push(stream);
 
@@ -37,13 +37,13 @@ module.exports = function (gulp, plugins, options) {
         .pipe(handleChanged())
         .pipe(plugins.if(!options.skipResize, handleResize(factor)))
         .pipe(plugins.if(!options.skipOptimize, handleOptimize()))
-        .pipe(gulp.dest(options.dest));
+        .pipe(vinyl.dest(options.dest));
 
       imageTasks.push(stream);
     });
 
     return mergeStream.apply(this, imageTasks)
-      .pipe(rev(gulp, plugins, options));
+      .pipe(rev(vinyl, plugins, options));
   };
 
   // Only handle images that need handling. Should be ran *after* handleRename

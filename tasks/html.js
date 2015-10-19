@@ -7,7 +7,7 @@ var delve = require('delve');
 var erbParser = require('rubbish-erb-parser');
 var yaml = require('js-yaml');
 
-module.exports = function (gulp, plugins, options) {
+module.exports = function (vinyl, plugins, options) {
   return function htmlTask(done) {
     var base = fs.readFileSync('demo/base.erb.html', 'utf8');
     var partial = fs.readFileSync('src/partials/partial.erb.html', 'utf8');
