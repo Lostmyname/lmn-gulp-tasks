@@ -131,25 +131,6 @@ gulp.task('clean', getLmnTask('clean', {
 }));
 ```
 
-### component-default
-
-A default task suitable for Lost My Name components generated using
-generator-lmn-component. Starts browser-sync, and watches some files.
-
-```js
-gulp.task('default', getLmnTask('component-default', {
-  reloadFiles: [], // Array of files to give to browsersync
-  watch: true // Run the watchers
-}));
-```
-
-I wouldn't recommend changing the options, or even specifying any at all.
-Usually this is fine:
-
-```js
-gulp.task('default', getLmnTask('component-default'));
-```
-
 ### copy*
 
 Literally just copies stuff from one place to another, and can fingerprint it
