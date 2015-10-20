@@ -6,6 +6,7 @@ import loadLmnTask from '../index';
 
 import fs from 'fs';
 import path from 'path';
+import should from 'should';
 
 var fixtures = path.join(__dirname, 'fixtures/js');
 var fixturesOut = path.join(__dirname, 'fixtures/out');
@@ -313,5 +314,20 @@ describe('browserify', function () {
 
       done();
     });
+  });
+
+  it('should only allow stage 4 proposals', function (done) {
+    loadLmnTask('browserify', {
+      src: path.join(fixtures, 'bad-es7.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: function () {
+        should.throw('Should have failed');
+      },
+      onError: function (err) {
+        err.message.should.containEql('Unexpected token');
+        done();
+      }
+    })();
   });
 });
