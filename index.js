@@ -4,7 +4,7 @@
 require('dotenv').load({ silent: true });
 
 var browserSync = require('browser-sync');
-var vinyl = require('./lib/vinyl');
+var vinyl = require('vinyl-fs');
 var plugins = require('gulp-load-plugins')();
 
 // Default error handler. Sends to browser-sync, and logs to console.
