@@ -9,7 +9,7 @@ module.exports = function (vinyl, plugins, options) {
     try {
       var src = path.join(findup('node_modules/' + options.module), options.src);
     } catch (e) {
-      if (e.message.indexOf('Received null')) {
+      if (e.message.indexOf('Received null') !== -1) {
         throw new Error('Module ' + options.module + ' not found');
       } else {
         throw e;
