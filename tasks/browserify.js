@@ -16,7 +16,7 @@ var rev = require('../lib/rev');
 
 module.exports = function (vinyl, plugins, options) {
   var basename = path.basename(options.dest);
-  options.dest = path.dirname(options.dest);
+  var dirname = path.dirname(options.dest);
 
   return function browserifyTask() {
     if (typeof options.minify !== 'boolean') {
@@ -96,7 +96,7 @@ module.exports = function (vinyl, plugins, options) {
         // Sourcemaps end
 
         .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
-        .pipe(vinyl.dest(options.dest))
+        .pipe(vinyl.dest(dirname))
         .pipe(rev(vinyl, plugins, options));
     }
 
