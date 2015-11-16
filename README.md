@@ -263,6 +263,24 @@ task will throw an error if you write "../node_modules" anywhere in your Sass.
 If you really want to use this anti-pattern, you can set the
 `ignoreSuckyAntipattern` option to true and the task won't check your code.
 
+### small-sprite
+
+This task generates a sprite sheet from large images, shrinking them in the
+process. Good for book previews and New Zealand tourist websites.
+
+```js
+gulp.task('a-z-images', getTask('small-sprite', {
+  src: './src/components/garousel/images/*.jpg',
+  imgDest: './src/components/garousel/azbook.jpg',
+  cssDest: './src/components/garousel/_generated.scss'
+}));
+```
+
+I'd recommend committing the generated image and scss, and not committing the
+source images unless they're already in the repo—this task doesn't need
+running unless the images change, and it takes a couple seconds to run, which
+then needs combining with the scss task. You get the picture.
+
 ### test-locales
 
 This searches for localised files and ensures that if a file is localised, it

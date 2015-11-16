@@ -108,7 +108,7 @@ describe('scss', function () {
         files.length.should.equal(0);
       },
       onError: function (err) {
-        err.message.should.containEql('file to import not found or unreadable');
+        err.message.should.containEql('File to import not found or unreadable');
         doneOnce();
       }
     })();

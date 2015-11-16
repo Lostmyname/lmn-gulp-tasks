@@ -15,8 +15,10 @@ var watchify = require('watchify');
 var rev = require('../lib/rev');
 
 module.exports = function (vinyl, plugins, options) {
+  options = _.clone(options);
+
   var basename = path.basename(options.dest);
-  var dirname = path.dirname(options.dest);
+  var dirname = options.dest = path.dirname(options.dest);
 
   return function browserifyTask() {
     if (typeof options.minify !== 'boolean') {
