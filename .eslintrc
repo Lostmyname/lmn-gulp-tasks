@@ -14,6 +14,7 @@
     "es6": true
   },
   "rules": {
+    "semi": [2, "always"],
     "camelcase": 2,
     "comma-style": [2, "last"],
     "curly": [2, "all"],
