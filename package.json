@@ -1,6 +1,6 @@
 {
   "name": "lmn-gulp-tasks",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Generic Gulp tasks used in Lost My Name components and projects",
   "main": "index.js",
   "scripts": {
