@@ -30,7 +30,7 @@
     "delve": "^0.3.2",
     "dotenv": "^1.2.0",
     "envify": "^3.4.0",
-    "eslint-plugin-react": "^3.11.3",
+    "eslint-plugin-react": "^3.14.0",
     "find-node-modules": "^1.0.1",
     "findup-sync": "^0.3.0",
     "gm": "^1.18.1",
