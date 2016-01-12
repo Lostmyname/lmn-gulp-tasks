@@ -1,6 +1,6 @@
 {
   "name": "lmn-gulp-tasks",
-  "version": "4.1.3",
+  "version": "4.1.0",
   "description": "Generic Gulp tasks used in Lost My Name components and projects",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,6 @@
     "delve": "^0.3.2",
     "dotenv": "^1.2.0",
     "envify": "^3.4.0",
-    "eslint-plugin-react": "^3.14.0",
     "find-node-modules": "^1.0.1",
     "findup-sync": "^0.3.0",
     "gm": "^1.18.1",
@@ -72,7 +71,6 @@
   },
   "devDependencies": {
     "babel": "^5.5.6",
-    "globby": "^4.0.0",
     "gulp-debug": "^2.1.2",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
