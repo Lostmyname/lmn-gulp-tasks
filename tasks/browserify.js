@@ -4,7 +4,6 @@ var path = require('path');
 var fs = require('fs');
 var babelify = require('babelify');
 var browserify = require('browserify');
-var reactify = require('reactify');
 var envify = require('envify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -51,17 +50,34 @@ module.exports = function (vinyl, plugins, options) {
     }
 
     bundler.transform(babelify.configure({
-      blacklist: ['es6.classes'],
-      loose: ['es6.modules'],
-      ignore: /jquery\-browserify\.js/,
-      stage: 4
+      presets: ['react'],
+      plugins: [
+        require('babel-plugin-transform-es2015-template-literals'),
+        require('babel-plugin-transform-es2015-literals'),
+        require('babel-plugin-transform-es2015-function-name'),
+        require('babel-plugin-transform-es2015-arrow-functions'),
+        require('babel-plugin-transform-es2015-block-scoped-functions'),
+        require('babel-plugin-transform-es2015-object-super'),
+        require('babel-plugin-transform-es2015-shorthand-properties'),
+        require('babel-plugin-transform-es2015-computed-properties'),
+        require('babel-plugin-transform-es2015-for-of'),
+        require('babel-plugin-transform-es2015-sticky-regex'),
+        require('babel-plugin-transform-es2015-unicode-regex'),
+        require('babel-plugin-check-es2015-constants'),
+        require('babel-plugin-transform-es2015-spread'),
+        require('babel-plugin-transform-es2015-parameters'),
+        require('babel-plugin-transform-es2015-destructuring'),
+        require('babel-plugin-transform-es2015-block-scoping'),
+        require('babel-plugin-transform-es2015-typeof-symbol'),
+        [require('babel-plugin-transform-es2015-modules-commonjs'), { loose: true }],
+        [require('babel-plugin-transform-regenerator'), { async: false, asyncGenerators: false }],
+        require('babel-plugin-transform-es3-member-expression-literals'),
+        require('babel-plugin-transform-es3-property-literals')
+      ],
+      ignore: /jquery\-browserify\.js/
     }));
 
     bundler.transform(envify);
-
-    if (options.react) {
-      bundler.transform(reactify);
-    }
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {

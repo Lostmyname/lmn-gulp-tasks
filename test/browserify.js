@@ -15,9 +15,10 @@ describe('browserify', function () {
   beforeEach(clean);
   afterEach(clean);
 
+  this.timeout(10000);
+
   // For some reason this speeds up the first task
   before(function () {
-    this.timeout(3000);
     loadLmnTask('browserify', {});
   });
 
@@ -310,7 +311,7 @@ describe('browserify', function () {
       contents.should.match(/'div',\s+null,\s+'Teststring123'/);
       contents.should.not.containEql('<div>Teststring123</div>');
 
-      contents.length.should.be.within(624500, 625000);
+      contents.length.should.be.within(600000, 700000);
 
       done();
     });
