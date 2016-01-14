@@ -9,6 +9,7 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var through = require('through2');
 var resolve = require('resolve');
+var livereactload = require('livereactload');
 var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
@@ -49,31 +50,44 @@ module.exports = function (vinyl, plugins, options) {
       });
     }
 
+    var babelPlugins = [
+      require('babel-plugin-transform-es2015-template-literals'),
+      require('babel-plugin-transform-es2015-literals'),
+      require('babel-plugin-transform-es2015-function-name'),
+      require('babel-plugin-transform-es2015-arrow-functions'),
+      require('babel-plugin-transform-es2015-block-scoped-functions'),
+      require('babel-plugin-transform-es2015-object-super'),
+      require('babel-plugin-transform-es2015-shorthand-properties'),
+      require('babel-plugin-transform-es2015-computed-properties'),
+      require('babel-plugin-transform-es2015-for-of'),
+      require('babel-plugin-transform-es2015-sticky-regex'),
+      require('babel-plugin-transform-es2015-unicode-regex'),
+      require('babel-plugin-check-es2015-constants'),
+      require('babel-plugin-transform-es2015-spread'),
+      require('babel-plugin-transform-es2015-parameters'),
+      require('babel-plugin-transform-es2015-destructuring'),
+      require('babel-plugin-transform-es2015-block-scoping'),
+      require('babel-plugin-transform-es2015-typeof-symbol'),
+      [require('babel-plugin-transform-es2015-modules-commonjs'), { loose: true }],
+      [require('babel-plugin-transform-regenerator'), { async: false, asyncGenerators: false }],
+      require('babel-plugin-transform-es3-member-expression-literals'),
+      require('babel-plugin-transform-es3-property-literals')
+    ];
+
+    if (options.watch) {
+      babelPlugins.push(['react-transform', {
+        transforms: [{
+          transform: 'livereactload/babel-transform',
+          imports: ['react']
+        }]
+      }]);
+
+      bundler.plugin(livereactload)
+    }
+
     bundler.transform(babelify.configure({
       presets: ['react'],
-      plugins: [
-        require('babel-plugin-transform-es2015-template-literals'),
-        require('babel-plugin-transform-es2015-literals'),
-        require('babel-plugin-transform-es2015-function-name'),
-        require('babel-plugin-transform-es2015-arrow-functions'),
-        require('babel-plugin-transform-es2015-block-scoped-functions'),
-        require('babel-plugin-transform-es2015-object-super'),
-        require('babel-plugin-transform-es2015-shorthand-properties'),
-        require('babel-plugin-transform-es2015-computed-properties'),
-        require('babel-plugin-transform-es2015-for-of'),
-        require('babel-plugin-transform-es2015-sticky-regex'),
-        require('babel-plugin-transform-es2015-unicode-regex'),
-        require('babel-plugin-check-es2015-constants'),
-        require('babel-plugin-transform-es2015-spread'),
-        require('babel-plugin-transform-es2015-parameters'),
-        require('babel-plugin-transform-es2015-destructuring'),
-        require('babel-plugin-transform-es2015-block-scoping'),
-        require('babel-plugin-transform-es2015-typeof-symbol'),
-        [require('babel-plugin-transform-es2015-modules-commonjs'), { loose: true }],
-        [require('babel-plugin-transform-regenerator'), { async: false, asyncGenerators: false }],
-        require('babel-plugin-transform-es3-member-expression-literals'),
-        require('babel-plugin-transform-es3-property-literals')
-      ],
+      plugins: babelPlugins,
       ignore: /jquery\-browserify\.js/
     }));
 

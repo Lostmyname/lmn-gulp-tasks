@@ -93,12 +93,15 @@
   },
   "devDependencies": {
     "babel": "^6.3.26",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
     "gulp-debug": "^2.1.2",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
+    "livereactload": "^2.1.0",
     "lmn.jester.theme.default": "^0.15.8",
     "mocha": "^2.1.0",
     "react": "^0.14.6",
+    "react-proxy": "^1.1.2",
     "should": "^7.1.0",
     "vinyl-fs-fake": "^1.0.0"
   }
