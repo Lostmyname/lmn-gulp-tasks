@@ -4,7 +4,7 @@
   "description": "Generic Gulp tasks used in Lost My Name components and projects",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel-register"
   },
   "engines": {
     "node": ">=0.12"
@@ -92,8 +92,9 @@
     "watchify": "^3.4.0"
   },
   "devDependencies": {
-    "babel": "^6.3.26",
     "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.4.3",
     "gulp-debug": "^2.1.2",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",

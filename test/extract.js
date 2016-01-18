@@ -8,12 +8,12 @@ import should from 'should';
 describe('extract', function () {
   it('should extract stuff. duh.', function (done) {
     loadLmnTask('extract', {
-      module: 'babel',
-      src: 'index.js',
+      module: 'babel-register',
+      src: 'package.json',
       dest: function (files) {
         files.length.should.equal(1);
 
-        var filePath = 'node_modules/babel/index.js';
+        var filePath = 'node_modules/babel-register/package.json';
         files[0].contents.should.eql(getFile(filePath, false));
 
         done();
