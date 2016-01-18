@@ -74,7 +74,7 @@ module.exports = function (vinyl, plugins, options) {
       require('babel-plugin-transform-es3-property-literals')
     ];
 
-    if (options.react && options.watch && options.hmr) {
+    if (options.react && options.watch && options.hotModuleReloading) {
       babelPlugins.push(['react-transform', {
         transforms: [{
           transform: 'livereactload/babel-transform',

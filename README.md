@@ -108,7 +108,7 @@ package in question. If you don't want jQuery, specify `jquery: false`. If you
 want multiple versions of jQuery: you can't do that, weirdo.
 
 There's also some react stuff built in: set `react` to true to enable the JSX
-parser, and set `hmr` to enable hot module reloading (note that `watch` also
+parser, and set `hotModuleReloading` to enable hot module reloading (note that `watch` also
 needs to be true).
 
 ### clean
