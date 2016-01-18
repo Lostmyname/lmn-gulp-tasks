@@ -74,7 +74,7 @@ module.exports = function (vinyl, plugins, options) {
       require('babel-plugin-transform-es3-property-literals')
     ];
 
-    if (options.watch) {
+    if (options.react && options.watch && options.hmr) {
       babelPlugins.push(['react-transform', {
         transforms: [{
           transform: 'livereactload/babel-transform',
@@ -86,7 +86,7 @@ module.exports = function (vinyl, plugins, options) {
     }
 
     bundler.transform(babelify.configure({
-      presets: ['react'],
+      presets: options.react ? ['react'] : [],
       plugins: babelPlugins,
       ignore: /jquery\-browserify\.js/
     }));
