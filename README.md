@@ -108,8 +108,28 @@ package in question. If you don't want jQuery, specify `jquery: false`. If you
 want multiple versions of jQuery: you can't do that, weirdo.
 
 There's also some react stuff built in: set `react` to true to enable the JSX
-parser, and set `hotModuleReloading` to enable hot module reloading (note that `watch` also
-needs to be true).
+parser, and set `hotModuleReloading` to enable hot module reloading (note that
+`watch` also needs to be true).
+
+#### factor-bundle
+
+Finally, we've added support for factor-bundle so that you can make other files
+with the dependencies in the main bundle still. This is good for performance!
+Configure it using the extras option.
+
+```js
+gulp.task('js', getLmnTask('browserify', {
+  src: './src/js/monkey.js',
+  dest: './demo/build/bundle.js',
+  minify: false,
+  extras: [
+    { src: './src/js/monkey-extras.js', dest: './demo/build/bundle-extras.js' }
+  ]
+}));
+```
+
+Load bundle.js before bundle-extras.js and it will act as if they're in one
+file.
 
 ### clean
 

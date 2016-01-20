@@ -331,4 +331,49 @@ describe('browserify', function () {
       }
     })();
   });
+
+  it('should split stuff out into other files if required', function (done) {
+    var out = path.join(fixturesOut, 'main-bundle.js');
+    var outOther = path.join(fixturesOut, 'checkout-bundle.js');
+    var outRandom = path.join(fixturesOut, 'random-bundle.js');
+
+    var stream = loadLmnTask('browserify', {
+      src: path.join(fixtures, 'factor-bundle/bundle.js'),
+      sourcemaps: false,
+      jquery: false,
+      dest: out,
+      extras: [
+        {
+          src: path.join(fixtures, 'factor-bundle/bundle-checkout.js'),
+          dest: outOther
+        },
+        {
+          src: path.join(fixtures, 'factor-bundle/bundle-random.js'),
+          dest: outRandom
+        }
+      ]
+    })();
+
+    stream.resume();
+    stream.on('end', function () {
+      var mainFile = getFile(out).toString();
+      var checkoutFile = getFile(outOther).toString();
+      var randomFile = getFile(outRandom).toString();
+
+      mainFile.should.containEql('lib on all pages!');
+      mainFile.should.containEql('console.log(lib);');
+      mainFile.should.not.containEql('checkout');
+      mainFile.should.not.containEql('random');
+
+      checkoutFile.should.containEql('checkout');
+      checkoutFile.should.not.containEql('lib on all pages!');
+      checkoutFile.should.not.containEql('random');
+
+      randomFile.should.containEql('random');
+      randomFile.should.not.containEql('lib on all pages!');
+      randomFile.should.not.containEql('checkout');
+
+      done();
+    });
+  });
 });

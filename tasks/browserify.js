@@ -1,5 +1,6 @@
 'use strict';
 
+var os = require('os');
 var path = require('path');
 var fs = require('fs');
 var babelify = require('babelify');
@@ -99,7 +100,7 @@ module.exports = function (vinyl, plugins, options) {
         var res = resolve.sync('jquery', { basedir: process.cwd() });
         var stream = fs.createReadStream(res);
         stream.file = 'jquery-browserify.js';
-        bundler.require(stream);
+        bundler.require(stream, { expose: 'jquery' });
       } catch (e) {
         if (e.message.indexOf('Cannot find module') !== -1) {
           console.log('jQuery couldn\'t be loaded, but that\'s okay');
@@ -110,6 +111,24 @@ module.exports = function (vinyl, plugins, options) {
     }
 
     bundler.add(options.src);
+
+    if (options.extras && options.extras.length) {
+      // factor-bundle isn't designed to do this, so the first file is junk
+      var outputs = [path.join(os.tmpdir(), 'junk.js')];
+
+      options.extras.forEach(function (extra) {
+        bundler.add(extra.src);
+        outputs.push(extra.dest);
+
+        // factor-bundle errors if the directory doesn't exist
+        var dir = path.dirname(extra.dest);
+        if (!fs.existsSync(dir)){
+          fs.mkdirSync(dir);
+        }
+      });
+
+      bundler.plugin('factor-bundle', { outputs: outputs });
+    }
 
     function bundle() {
       console.log('Browserify: Bundling');
