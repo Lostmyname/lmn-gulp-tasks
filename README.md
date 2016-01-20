@@ -128,8 +128,8 @@ gulp.task('js', getLmnTask('browserify', {
 }));
 ```
 
-Load bundle.js before bundle-extras.js and it will act as if they're in one
-file.
+You need to `require('./monkey')` from monkey-extras.js, but then when you load
+bundle.js before bundle-extras.js and it will act as if they're in one file.
 
 ### clean
 
