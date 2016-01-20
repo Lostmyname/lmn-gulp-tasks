@@ -291,7 +291,7 @@ describe('browserify', function () {
   });
 
   it('should support react and jsx', function (done) {
-    this.timeout(4000);
+    this.timeout(8000);
 
     var out = path.join(fixturesOut, 'bad-es6.js');
     var stream = loadLmnTask('browserify', {
