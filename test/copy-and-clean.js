@@ -22,6 +22,7 @@ describe('copy and clean', function () {
       dest: fixturesOut
     })();
 
+    stream.resume();
     stream.on('finish', function () {
       var file = getFile(f('simple.js'));
 
