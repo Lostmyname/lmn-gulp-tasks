@@ -76,7 +76,7 @@ module.exports = function (vinyl, plugins, options) {
   // Use gulp-gm to resize the image
   function handleResize(factor) {
     return through.obj(function (file, enc, cb) {
-      var newFactor = _.contains(file.originalPath, '@2x') ? factor / 2 : factor;
+      var newFactor = _.includes(file.originalPath, '@2x') ? factor / 2 : factor;
 
       if (newFactor === 100) {
         return cb(null, file);
