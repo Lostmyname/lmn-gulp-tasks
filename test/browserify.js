@@ -252,6 +252,7 @@ describe('browserify', function () {
       src: path.join(fixtures, 'bad-es6.js'),
       sourcemaps: false,
       jquery: false,
+      disableImagePath: true,
       dest: out
     })();
 
@@ -374,6 +375,56 @@ describe('browserify', function () {
       randomFile.should.not.containEql('checkout');
 
       done();
+    });
+  });
+
+  describe('image_path', function () {
+    // This horrible hack is to stop is being deleted straight away!
+    beforeEach(function (done) {
+      fs.writeFile('rev-manifest.json', '{"cat.jpg":"cat-123.jpg"}', function (err) {
+        done(err);
+      });
+    });
+
+    it('should handle image_path correctly', function (done) {
+      var out = path.join(fixturesOut, 'image-path.js');
+      var stream = loadLmnTask('browserify', {
+        src: path.join(fixtures, 'image-path.js'),
+        sourcemaps: false,
+        jquery: false,
+        dest: out
+      })();
+
+      stream.resume();
+      stream.on('end', function () {
+        var file = getFile(out);
+
+        file.toString().should.containEql('var path = \'cat-123.jpg\';');
+        file.toString().should.containEql('var badPath = \'404.jpg\';');
+
+        done();
+      });
+    });
+
+    it('should handle image_path correct with custom manifest', function (done) {
+      var out = path.join(fixturesOut, 'image-path.js');
+      var stream = loadLmnTask('browserify', {
+        src: path.join(fixtures, 'image-path.js'),
+        sourcemaps: false,
+        jquery: false,
+        assetManifest: { 'cat.jpg': 'dog.jpg' },
+        dest: out
+      })();
+
+      stream.resume();
+      stream.on('end', function () {
+        var file = getFile(out);
+
+        file.toString().should.containEql('var path = \'dog.jpg\';');
+        file.toString().should.containEql('var badPath = \'404.jpg\';');
+
+        done();
+      });
     });
   });
 });
