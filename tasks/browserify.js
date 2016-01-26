@@ -10,7 +10,6 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var through = require('through2');
 var resolve = require('resolve');
-var livereactload = require('livereactload');
 var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
@@ -83,7 +82,7 @@ module.exports = function (vinyl, plugins, options) {
         }]
       }]);
 
-      bundler.plugin(livereactload)
+      bundler.plugin(require('livereactload'))
     }
 
     bundler.transform(babelify.configure({
