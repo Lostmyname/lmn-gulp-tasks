@@ -378,7 +378,7 @@ describe('browserify', function () {
     });
   });
 
-  describe('image_path', function () {
+  describe('imagePath()', function () {
     // This horrible hack is to stop is being deleted straight away!
     beforeEach(function (done) {
       fs.writeFile('rev-manifest.json', '{"cat.jpg":"cat-123.jpg"}', function (err) {
@@ -386,7 +386,7 @@ describe('browserify', function () {
       });
     });
 
-    it('should handle image_path correctly', function (done) {
+    it('should revision paths wrapped by imagePath()', function (done) {
       var out = path.join(fixturesOut, 'image-path.js');
       var stream = loadLmnTask('browserify', {
         src: path.join(fixtures, 'image-path.js'),
@@ -406,7 +406,7 @@ describe('browserify', function () {
       });
     });
 
-    it('should handle image_path correct with custom manifest', function (done) {
+    it('should revision paths wrapped by imagePath() with custom manifest', function (done) {
       var out = path.join(fixturesOut, 'image-path.js');
       var stream = loadLmnTask('browserify', {
         src: path.join(fixtures, 'image-path.js'),
