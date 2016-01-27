@@ -13,6 +13,7 @@ var resolve = require('resolve');
 var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
+var imagePathify = require('../lib/image-path-transform');
 
 module.exports = function (vinyl, plugins, options) {
   options = _.clone(options);
@@ -92,6 +93,30 @@ module.exports = function (vinyl, plugins, options) {
     }));
 
     bundler.transform(envify);
+
+    if (options.disableImagePath !== true) {
+      if (!options.assetManifest) {
+        try {
+          var manifestPath = path.join(options.manifest || '', 'rev-manifest.json');
+          var manifest = fs.readFileSync(manifestPath);
+          options.assetManifest = JSON.parse(manifest.toString());
+        } catch (e) {
+          if (e.message.indexOf('ENOENT') === -1) {
+            throw e;
+          }
+
+          options.assetManifest = {};
+        }
+      }
+
+      if (!options.resolvePath) {
+        options.resolvePath = function (filename, manifest) {
+          return manifest[filename] || filename;
+        };
+      }
+
+      bundler.transform(imagePathify(options));
+    }
 
     // Add local jQuery only, if it exists
     if (options.jquery !== false) {
