@@ -426,5 +426,28 @@ describe('browserify', function () {
         done();
       });
     });
+
+    it('should support custom functions', function (done) {
+      var out = path.join(fixturesOut, 'image-path.js');
+      var stream = loadLmnTask('browserify', {
+        src: path.join(fixtures, 'image-path.js'),
+        sourcemaps: false,
+        jquery: false,
+        resolvePath: function (filename, manifest) {
+          return '/a/b/c/' + (manifest[filename] || filename);
+        },
+        dest: out
+      })();
+
+      stream.resume();
+      stream.on('end', function () {
+        var file = getFile(out);
+
+        file.toString().should.containEql('var path = \'/a/b/c/cat-123.jpg\';');
+        file.toString().should.containEql('var badPath = \'/a/b/c/404.jpg\';');
+
+        done();
+      });
+    });
   });
 });

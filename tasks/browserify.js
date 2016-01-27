@@ -97,14 +97,25 @@ module.exports = function (vinyl, plugins, options) {
     if (options.disableImagePath !== true) {
       if (!options.assetManifest) {
         try {
-          var manifest = fs.readFileSync('rev-manifest.json');
+          var manifestPath = path.join(options.manifest || '', 'rev-manifest.json');
+          var manifest = fs.readFileSync(manifestPath);
           options.assetManifest = JSON.parse(manifest.toString());
         } catch (e) {
+          if (e.message.indexOf('ENOENT: no such file or directory') === -1) {
+            throw e;
+          }
+
           options.assetManifest = {};
         }
       }
 
-      bundler.transform(imagePathify(options.assetManifest));
+      if (!options.resolvePath) {
+        options.resolvePath = function (filename, manifest) {
+          return manifest[filename] || filename;
+        };
+      }
+
+      bundler.transform(imagePathify(options));
     }
 
     // Add local jQuery only, if it exists
