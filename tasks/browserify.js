@@ -101,7 +101,7 @@ module.exports = function (vinyl, plugins, options) {
           var manifest = fs.readFileSync(manifestPath);
           options.assetManifest = JSON.parse(manifest.toString());
         } catch (e) {
-          if (e.message.indexOf('ENOENT: no such file or directory') === -1) {
+          if (e.message.indexOf('ENOENT') === -1) {
             throw e;
           }
 
