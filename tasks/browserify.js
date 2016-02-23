@@ -14,6 +14,7 @@ var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
 var imagePathify = require('../lib/image-path-transform');
+var imageManifestify = require('../lib/image-manifest-transform');
 
 module.exports = function (vinyl, plugins, options) {
   options = _.clone(options);
@@ -83,7 +84,7 @@ module.exports = function (vinyl, plugins, options) {
         }]
       }]);
 
-      bundler.plugin(require('livereactload'))
+      bundler.plugin(require('livereactload'));
     }
 
     bundler.transform(babelify.configure({
@@ -116,6 +117,7 @@ module.exports = function (vinyl, plugins, options) {
       }
 
       bundler.transform(imagePathify(options));
+      bundler.transform(imageManifestify(options));
     }
 
     // Add local jQuery only, if it exists
@@ -146,7 +148,7 @@ module.exports = function (vinyl, plugins, options) {
 
         // factor-bundle errors if the directory doesn't exist
         var dir = path.dirname(extra.dest);
-        if (!fs.existsSync(dir)){
+        if (!fs.existsSync(dir)) {
           fs.mkdirSync(dir);
         }
       });
