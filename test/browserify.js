@@ -450,4 +450,36 @@ describe('browserify', function () {
       });
     });
   });
+
+  describe('imageManifest()', function () {
+    // This horrible hack is to stop is being deleted straight away!
+    beforeEach(function (done) {
+      /* eslint-disable max-len */
+      fs.writeFile('rev-manifest.json', '{"cat-small.jpg":"cat-small-123.jpg", cat-medium.jpg":"cat-medium-123.jpg", cat-large.jpg":"cat-large-123.jpg", cat-xlarge.jpg":"cat-xlarge-123.jpg"}', function (err) {
+        done(err);
+      });
+      /* eslint-enable max-len */
+    });
+
+    it('should return a valid manifest', function (done) {
+      var out = path.join(fixturesOut, 'image-manifest.js');
+      var stream = loadLmnTask('browserify', {
+        src: path.join(fixtures, 'image-manifest.js'),
+        sourcemaps: false,
+        jquery: false,
+        dest: out
+      })();
+
+      stream.resume();
+      stream.on('end', function () {
+        var file = getFile(out);
+        /* eslint-disable max-len */
+        file.toString().should.containEql('var manifest = {"cat-small.jpg":"cat-small-123.jpg", cat-medium.jpg":"cat-medium-123.jpg", cat-large.jpg":"cat-large-123.jpg", cat-xlarge.jpg":"cat-xlarge-123.jpg"};');
+        /* eslint-enable max-len */
+        file.toString().should.containEql('var badManifest = {};');
+
+        done();
+      });
+    });
+  });
 });
