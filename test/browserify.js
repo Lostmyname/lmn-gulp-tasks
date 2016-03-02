@@ -474,7 +474,7 @@ describe('browserify', function () {
       stream.on('end', function () {
         var file = getFile(out);
         /* eslint-disable max-len */
-        file.toString().should.containEql('var manifest = {"cat-small.jpg":"cat-small-123.jpg", "cat-medium.jpg":"cat-medium-123.jpg", "cat-large.jpg":"cat-large-123.jpg", "cat-xlarge.jpg":"cat-xlarge-123.jpg"};');
+        file.toString().should.containEql('var manifest = {"cat-small.jpg":"cat-small-123.jpg","cat-medium.jpg":"cat-medium-123.jpg","cat-large.jpg":"cat-large-123.jpg","cat-xlarge.jpg":"cat-xlarge-123.jpg"};');
         /* eslint-enable max-len */
         file.toString().should.containEql('var badManifest = {};');
 
