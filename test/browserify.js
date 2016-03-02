@@ -455,7 +455,7 @@ describe('browserify', function () {
     // This horrible hack is to stop is being deleted straight away!
     beforeEach(function (done) {
       /* eslint-disable max-len */
-      fs.writeFile('rev-manifest.json', '{"cat-small.jpg":"cat-small-123.jpg", cat-medium.jpg":"cat-medium-123.jpg", cat-large.jpg":"cat-large-123.jpg", cat-xlarge.jpg":"cat-xlarge-123.jpg"}', function (err) {
+      fs.writeFile('rev-manifest.json', '{"cat-small.jpg":"cat-small-123.jpg", "cat-medium.jpg":"cat-medium-123.jpg", "cat-large.jpg":"cat-large-123.jpg", "cat-xlarge.jpg":"cat-xlarge-123.jpg"}', function (err) {
         done(err);
       });
       /* eslint-enable max-len */
