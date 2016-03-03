@@ -14,6 +14,13 @@
     "jquery": false,
     "es6": true
   },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "plugins": [
     "react"
   ],
@@ -53,7 +60,7 @@
     "valid-typeof": 2,
     "wrap-iife": [2, "inside"],
     "no-use-before-define": [2, "nofunc"],
-    "space-after-keywords": 2,
+    "keyword-spacing": 2,
     "brace-style": [2, "1tbs"],
     "consistent-this": [1, "that"],
     "eol-last": 1,
@@ -95,7 +102,7 @@
     "react/jsx-indent-props": [2, 2],
     "react/jsx-indent": [2, 2],
     "react/jsx-key": 2,
-    "react/jsx-max-props-per-line": [2, 1],
+    "react/jsx-max-props-per-line": [2, { "maximum" : 1}],
     "react/jsx-no-bind": 2,
     "react/jsx-no-duplicate-props": 2,
     "react/jsx-no-literals": 0,
