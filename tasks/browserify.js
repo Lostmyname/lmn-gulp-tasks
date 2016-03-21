@@ -22,7 +22,6 @@ module.exports = function (vinyl, plugins, options) {
   var basename = path.basename(options.dest);
   var dirname = options.dest = path.dirname(options.dest);
 
-  var cssBasename = path.basename(options.cssDest);
   var cssDirname = options.cssDest = path.dirname(options.cssDest);
 
   return function browserifyTask() {
@@ -154,7 +153,7 @@ module.exports = function (vinyl, plugins, options) {
         // Sourcemaps start
         .pipe(options.cssModules ? cssModules({
           rootDir: dirname,
-          output: vinyl.dest(cssDirname)
+          output: cssDirname
         }) : through.obj())
         .pipe(options.minify ? plugins.uglify() : through.obj())
         .pipe(options.minify ? plugins.stripDebug() : through.obj())
