@@ -14,6 +14,7 @@ var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
 var imagePathify = require('../lib/image-path-transform');
+var cssModules = require('css-modulesify');
 
 module.exports = function (vinyl, plugins, options) {
   options = _.clone(options);
@@ -28,6 +29,10 @@ module.exports = function (vinyl, plugins, options) {
 
     if (typeof options.sourcemaps !== 'boolean') {
       options.sourcemaps = process.env.SOURCEMAPS || true;
+    }
+
+    if (typeof options.cssModules !== 'boolean') {
+      options.cssModules = process.env.CSSMODULES || false;
     }
 
     var ignore = options.ignoreSuckyAntipattern;
@@ -144,6 +149,10 @@ module.exports = function (vinyl, plugins, options) {
         .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
 
         // Sourcemaps start
+        .pipe(options.cssModules ? plugins.cssModules({
+          rootDir: dirname,
+          output: './css/styles.css'
+        }) : through.obj())
         .pipe(options.minify ? plugins.uglify() : through.obj())
         .pipe(options.minify ? plugins.stripDebug() : through.obj())
         // Sourcemaps end
