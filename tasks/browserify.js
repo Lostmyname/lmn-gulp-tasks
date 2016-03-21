@@ -22,6 +22,9 @@ module.exports = function (vinyl, plugins, options) {
   var basename = path.basename(options.dest);
   var dirname = options.dest = path.dirname(options.dest);
 
+  var cssBasename = path.basename(options.cssDest);
+  var cssDirname = options.cssDest = path.dirname(options.cssDest);
+
   return function browserifyTask() {
     if (typeof options.minify !== 'boolean') {
       options.minify = process.env.MINIFY_ASSETS || false;
@@ -149,9 +152,9 @@ module.exports = function (vinyl, plugins, options) {
         .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
 
         // Sourcemaps start
-        .pipe(options.cssModules ? plugins.cssModules({
+        .pipe(options.cssModules ? cssModules({
           rootDir: dirname,
-          output: './css/styles.css'
+          output: vinyl.dest(cssDirname)
         }) : through.obj())
         .pipe(options.minify ? plugins.uglify() : through.obj())
         .pipe(options.minify ? plugins.stripDebug() : through.obj())
