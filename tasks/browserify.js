@@ -14,7 +14,7 @@ var _ = require('lodash');
 var watchify = require('watchify');
 var rev = require('../lib/rev');
 var imagePathify = require('../lib/image-path-transform');
-var cssModules = require('css-modulesify');
+var brfs = require('brfs');
 
 module.exports = function (vinyl, plugins, options) {
   options = _.clone(options);
@@ -68,7 +68,7 @@ module.exports = function (vinyl, plugins, options) {
         }]
       }]);
 
-      bundler.plugin(require('livereactload'))
+      bundler.plugin(require('livereactload'));
     }
 
     bundler.transform(babelify.configure({
@@ -78,6 +78,13 @@ module.exports = function (vinyl, plugins, options) {
     }));
 
     bundler.transform(envify);
+
+    if (options.cssModules) {
+      bundler.transform(brfs({ ignore: /\.css/ }));
+      bundler.plugin(require('css-modulesify'), {
+        rootDir: options.dest
+      });
+    }
 
     if (options.disableImagePath !== true) {
       if (!options.assetManifest) {
@@ -144,6 +151,9 @@ module.exports = function (vinyl, plugins, options) {
 
       return bundler.bundle()
         .on('error', options.onError)
+        .on('css stream', function (css) {
+          css.pipe(vinyl.dest(cssDirname));
+        })
         .pipe(source(basename))
         .pipe(plugins.plumber({ errorHandler: options.onError }))
         .pipe(buffer())
@@ -151,10 +161,6 @@ module.exports = function (vinyl, plugins, options) {
         .pipe(options.sourcemaps ? plugins.sourcemaps.init({ loadMaps: true }) : through.obj())
 
         // Sourcemaps start
-        .pipe(options.cssModules ? cssModules({
-          rootDir: dirname,
-          output: cssDirname
-        }) : through.obj())
         .pipe(options.minify ? plugins.uglify() : through.obj())
         .pipe(options.minify ? plugins.stripDebug() : through.obj())
         // Sourcemaps end
