@@ -1,10 +1,4 @@
 {
-  "ecmaFeatures": {
-    "blockBindings": false,
-    "classes": false,
-    "modules": true,
-    "jsx": true
-  },
   "env": {
     "jasmine": true,
     "node": true,
