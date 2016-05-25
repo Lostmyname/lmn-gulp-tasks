@@ -25,9 +25,9 @@
   "dependencies": {
     "babel-preset-es2015-lmn": "^1.0.0",
     "babel-preset-react": "^6.3.13",
-    "babelify": "^7.2.0",
+    "babelify": "^7.3.0",
     "browser-sync": "^2.0.1",
-    "browserify": "^11.2.0",
+    "browserify": "^13.0.1",
     "browserify-transform-tools": "^1.5.1",
     "del": "^2.0.2",
     "delve": "^0.3.2",
