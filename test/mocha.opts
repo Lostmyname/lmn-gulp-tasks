@@ -1,2 +1,3 @@
 --require should
 --require ./lib/testSetup
+--compilers js:babel-register

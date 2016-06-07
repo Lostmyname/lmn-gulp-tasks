@@ -14,6 +14,8 @@ describe('optimise-svgs', function () {
   beforeEach(clean);
   after(clean);
 
+  this.timeout(4000);
+
   it('shouldnt optimise unchanged svgs', function (done) {
     var stream = loadLmnTask('optimise-svgs', {
       src: p('svg/logo-148x35.svg'),
@@ -40,7 +42,7 @@ describe('optimise-svgs', function () {
 
     stream.on('end', function () {
       var expectedSvg = getFile(p('svg/logo-148x35-out.svg'));
-      var svgOut = getFile(p('out/logo-148x35.svg'), false);
+      var svgOut = getFile(p('out/logo-148x35.svg'));
 
       svgOut.should.eql(expectedSvg);
 
@@ -63,7 +65,7 @@ describe('optimise-svgs', function () {
 
     stream.on('end', function () {
       var expectedSvg = getFile(p('svg/logo-148x35-out.svg'));
-      var svgOut = getFile(p('out/logo-148x35.svg'), false);
+      var svgOut = getFile(p('out/logo-148x35.svg'));
 
       svgOut.should.eql(expectedSvg);
 

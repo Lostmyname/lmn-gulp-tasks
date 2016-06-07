@@ -4,7 +4,7 @@
   "description": "Generic Gulp tasks used in Lost My Name components and projects",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha"
   },
   "engines": {
     "node": ">=0.12"
@@ -54,7 +54,7 @@
     "gulp-sass": "^2.0.0",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-strip-debug": "^1.0.2",
-    "gulp-svg2png": "^0.3.0",
+    "gulp-svg2png": "^2.0.0",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.2",
     "gulp.spritesmith": "^4.3.0",
