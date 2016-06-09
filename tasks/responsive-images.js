@@ -6,6 +6,7 @@ var mergeStream = require('merge-stream');
 var rev = require('../lib/rev');
 var through = require('through2');
 var gm = require('gm').subClass({ imageMagick: true });
+var path = require('path');
 
 
 module.exports = function (vinyl, plugins, options) {
@@ -50,8 +51,17 @@ module.exports = function (vinyl, plugins, options) {
   function handleChanged() {
     return plugins.changed(options.dest, {
       hasChanged: function (stream, cb, file, destPath) {
+        var manifestPath = options.manifest || process.cwd();
+        var manifest = require(path.join(manifestPath, 'rev-manifest.json'));
+
         destPath = destPath.replace(/\d+[x-]\d+(?:@2x)?(?=(?:-[a-z]{2}(?:-[A-Z]{2})?)?\.[a-z]+$)/, 'small');
-        plugins.changed.compareLastModifiedTime(stream, cb, file, destPath);
+
+        if (!manifest[path.basename(destPath)]) {
+          stream.push(file);
+          cb();
+        } else {
+          plugins.changed.compareLastModifiedTime(stream, cb, file, destPath);
+        }
       }
     });
   }
