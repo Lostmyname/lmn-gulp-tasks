@@ -18,9 +18,9 @@ describe('browserify', function () {
   this.timeout(10000);
 
   // For some reason this speeds up the first task
-  before(function () {
-    loadLmnTask('browserify', {});
-  });
+  //before(function () {
+  //  loadLmnTask('browserify', {});
+  //});
 
   it('should parse simple js', function (done) {
     var out = path.join(fixturesOut, 'simple.js');
@@ -85,6 +85,7 @@ describe('browserify', function () {
   it('should object to ../node_modules', function (done) {
     loadLmnTask('browserify', {
       src: path.join(fixtures, 'bad-import.js'),
+      dest: path.join(fixturesOut, 'bad-import.js'),
       minify: false,
       sourcemaps: false,
       jquery: false,
@@ -313,11 +314,9 @@ describe('browserify', function () {
   it('should only allow stage 4 proposals', function (done) {
     loadLmnTask('browserify', {
       src: path.join(fixtures, 'bad-es7.js'),
+      dest: path.join(fixturesOut, 'bad-es7.js'),
       sourcemaps: false,
       jquery: false,
-      dest: function () {
-        should.throw('Should have failed');
-      },
       onError: function (err) {
         err.message.should.containEql('Unexpected token');
         done();
