@@ -52,7 +52,7 @@ module.exports = function (vinyl, plugins, options) {
       }))
       .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
       .pipe(plugins.autoprefixer())
-      .pipe(options.minify ? plugins.minifyCss() : through.obj())
+      .pipe(options.minify ? plugins.cleanCss() : through.obj())
       .pipe(options.rev ? plugins.fingerprint(manifest, {
         prefix: '/'
       }) : through.obj())
