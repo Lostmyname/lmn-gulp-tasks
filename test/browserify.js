@@ -157,15 +157,7 @@ describe('browserify', function () {
       var map = getFile(mapOut, false);
 
       map.length.should.be.within(650, 800);
-
-      var sources = {
-        sources: [
-          'node_modules/browserify/node_modules/browser-pack/_prelude.js',
-          'test/fixtures/js/simple.js'
-        ]
-      };
-
-      map.toString().should.containEql(JSON.stringify(sources).slice(1, -1));
+      map.toString().should.match(/"sources":.+"test\/fixtures\/js\/simple.js"/);
 
       done();
     });
