@@ -14,6 +14,8 @@ describe('optimise-svgs', function () {
   beforeEach(clean);
   after(clean);
 
+  this.timeout(4000);
+
   it('shouldnt optimise unchanged svgs', function (done) {
     var stream = loadLmnTask('optimise-svgs', {
       src: p('svg/logo-148x35.svg'),

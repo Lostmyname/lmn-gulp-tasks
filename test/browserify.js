@@ -17,11 +17,6 @@ describe('browserify', function () {
 
   this.timeout(10000);
 
-  // For some reason this speeds up the first task
-  before(function () {
-    loadLmnTask('browserify', {});
-  });
-
   it('should parse simple js', function (done) {
     var out = path.join(fixturesOut, 'simple.js');
     var stream = loadLmnTask('browserify', {
@@ -85,6 +80,7 @@ describe('browserify', function () {
   it('should object to ../node_modules', function (done) {
     loadLmnTask('browserify', {
       src: path.join(fixtures, 'bad-import.js'),
+      dest: path.join(fixturesOut, 'bad-import.js'),
       minify: false,
       sourcemaps: false,
       jquery: false,
@@ -157,15 +153,7 @@ describe('browserify', function () {
       var map = getFile(mapOut, false);
 
       map.length.should.be.within(650, 800);
-
-      var sources = {
-        sources: [
-          'node_modules/browserify/node_modules/browser-pack/_prelude.js',
-          'test/fixtures/js/simple.js'
-        ]
-      };
-
-      map.toString().should.containEql(JSON.stringify(sources).slice(1, -1));
+      map.toString().should.match(/"sources":.+"test\/fixtures\/js\/simple.js"/);
 
       done();
     });
@@ -321,11 +309,9 @@ describe('browserify', function () {
   it('should only allow stage 4 proposals', function (done) {
     loadLmnTask('browserify', {
       src: path.join(fixtures, 'bad-es7.js'),
+      dest: path.join(fixturesOut, 'bad-es7.js'),
       sourcemaps: false,
       jquery: false,
-      dest: function () {
-        should.throw('Should have failed');
-      },
       onError: function (err) {
         err.message.should.containEql('Unexpected token');
         done();

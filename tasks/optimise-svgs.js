@@ -17,7 +17,6 @@ module.exports = function (vinyl, plugins, options) {
 
     // Make optimised PNG fallbacks
     var pngStream = svgStream.pipe(plugins.svg2png())
-      .pipe(plugins.rename({ extname: '.png' }))
       .pipe(plugins.imagemin({ progressive: true }))
       .pipe(vinyl.dest(options.dest));
 

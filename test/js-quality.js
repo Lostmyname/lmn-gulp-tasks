@@ -59,7 +59,7 @@ describe('js-quality', function () {
     stream.on('end', function () {
       unhook();
 
-      output.should.containEql('"unused" is defined but never used');
+      output.should.containEql('\'unused\' is defined but never used');
 
       done();
     });
