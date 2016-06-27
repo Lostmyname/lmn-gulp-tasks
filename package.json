@@ -74,7 +74,9 @@
   "devDependencies": {
     "babel-plugin-react-transform": "^2.0.0-beta1",
     "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.11.0",
     "babel-register": "^6.4.3",
+    "find-node-modules": "^1.0.3",
     "gulp-debug": "^2.1.2",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
