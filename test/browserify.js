@@ -282,7 +282,7 @@ describe('browserify', function () {
   it('should support react and jsx', function (done) {
     this.timeout(8000);
 
-    var out = path.join(fixturesOut, 'bad-es6.js');
+    var out = path.join(fixturesOut, 'react.js');
     var stream = loadLmnTask('browserify', {
       src: path.join(fixtures, 'react.js'),
       sourcemaps: false,
@@ -297,7 +297,7 @@ describe('browserify', function () {
 
       var contents = file.toString();
 
-      contents.should.match(/'div',\s+null,\s+'Teststring123'/);
+      contents.should.match(/'div',\s+(?:null|\{[^}]+}),\s+'Teststring123'/);
       contents.should.not.containEql('<div>Teststring123</div>');
 
       contents.length.should.be.within(600000, 700000);
