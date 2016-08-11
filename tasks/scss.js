@@ -39,27 +39,40 @@ module.exports = function (vinyl, plugins, options) {
 
     var ignore = options.ignoreSuckyAntipattern;
 
-    return vinyl.src(options.src)
-      .pipe(plugins.plumber({ errorHandler: options.onError }))
-      .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
-      .pipe(options.sourcemaps ? plugins.sourcemaps.init() : through.obj())
+    // TODO: this is a very ugly hack to fix fingerprinting in scss
+    var imageBase = options.imagePath ? options.imagePath + '/' : '';
+    var imagePrefix = imageBase;
+    var fontBase = '../fonts/';
+    var fontPrefix = imagePrefix.replace('images', 'fonts');
 
-      // Sourcemap start
-      .pipe(plugins.sass({
-        functions: { 'image-url($imagePath)': imageUrl },
-        includePaths: includePaths, // @todo: Deprecate includePaths?
-        importer: sassNpmImporter
-      }))
-      .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
-      .pipe(plugins.autoprefixer())
-      .pipe(options.minify ? plugins.cleanCss() : through.obj())
-      .pipe(options.rev ? plugins.fingerprint(manifest, {
-        prefix: '/'
-      }) : through.obj())
-      // Sourcemap end
+    return vinyl.src(options.src)
+      .pipe(plugins.plumber({ errorHandler: options.onError }))
+      .pipe(ignore ? through.obj() : plugins.contains('../node_modules'))
+      .pipe(options.sourcemaps ? plugins.sourcemaps.init() : through.obj())
 
-      .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
-      .pipe(vinyl.dest(options.dest))
-      .pipe(rev(vinyl, plugins, options));
+      // Sourcemap start
+      .pipe(plugins.sass({
+        functions: { 'image-url($imagePath)': imageUrl },
+        includePaths: includePaths, // @todo: Deprecate includePaths?
+        importer: sassNpmImporter
+      }))
+      .on('error', options.onError) // For some reason gulp-plumber doesn't like -compass
+      .pipe(plugins.autoprefixer())
+      .pipe(options.minify ? plugins.cleanCss() : through.obj())
+      .pipe(options.rev ? plugins.fingerprint(manifest, {
+        base: imageBase,
+        prefix: imagePrefix,
+        // verbose: true
+      }) : through.obj())
+      .pipe(options.rev ? plugins.fingerprint(manifest, {
+        base: fontBase,
+        prefix: fontPrefix,
+        // verbose: true
+      }) : through.obj())
+      // Sourcemap end
+
+      .pipe(options.sourcemaps ? plugins.sourcemaps.write('./') : through.obj())
+      .pipe(vinyl.dest(options.dest))
+      .pipe(rev(vinyl, plugins, options));
   };
 };
