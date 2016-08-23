@@ -58,7 +58,7 @@
     "gulp-util": "^3.0.2",
     "gulp.spritesmith": "^4.3.0",
     "imagemin-jpegoptim": "^4.0.0",
-    "livereactload": "^2.2.3",
+    "livereactload": "^3.0.0",
     "lodash": "^4.13.1",
     "merge-stream": "^1.0.0",
     "multipipe": "^0.3.1",
