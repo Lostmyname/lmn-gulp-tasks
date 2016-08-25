@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Lostmyname/lmn-gulp-tasks",
   "dependencies": {
+    "@lostmyname/css": "^0.2.2",
     "babel-preset-es2015-lmn": "^2.0.0",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.3.0",
@@ -80,7 +81,6 @@
     "gulp-debug": "^2.1.2",
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
-    "lmn.jester.theme.default": "^0.15.8",
     "mocha": "^2.5.3",
     "react": "^0.14.6",
     "react-proxy": "^1.1.2",
