@@ -106,7 +106,6 @@ describe('scss', function () {
       sourcemaps: false,
       dest: function (files) {
         files.length.should.equal(1);
-
         done();
       },
       onError: function (err) {
