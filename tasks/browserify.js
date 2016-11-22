@@ -41,6 +41,10 @@ module.exports = function (vinyl, plugins, options) {
       opts = _.assign({}, watchify.args, opts);
     }
 
+    if (options.paths) {
+      opts.paths = options.paths;
+    }
+
     var bundler = browserify(opts);
 
     if (options.watch) {
