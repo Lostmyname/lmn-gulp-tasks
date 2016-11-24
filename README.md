@@ -205,6 +205,17 @@ die.
 
 Prior to 2.0.0, lmn-gulp-task used JSHint, JSCS, and Buddy.js.
 
+### css-quality
+
+This task runs stylelint on your CSS, and stops Gulp if an
+error is found.
+
+```js
+gulp.task('css-quality', getLmnTask('css-quality', {
+  src: './src/**/*.scss'
+}));
+```
+
 ### optimise-svgs*
 
 This task gets svgs, optionally flattens the directory structure, optimises
