@@ -65,7 +65,7 @@ module.exports = function (vinyl, plugins, options) {
     }
 
     bundler.transform(babelify.configure({
-      presets: ['es2015-lmn'].concat(options.react ? ['react'] : []),
+      presets: ['lmn'].concat(options.react ? ['react'] : []),
       plugins: babelPlugins,
       ignore: /jquery\-browserify\.js/
     }));
