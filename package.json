@@ -84,7 +84,7 @@
     "hook-stdio": "^1.0.0",
     "jquery": "^2.1.4",
     "mocha": "^2.5.3",
-    "react": "^0.14.6",
+    "react": "^15.1.0",
     "react-proxy": "^1.1.2",
     "should": "^9.0.2",
     "vinyl-fs-fake": "^1.0.0"
